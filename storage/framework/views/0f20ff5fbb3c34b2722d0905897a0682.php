@@ -11,7 +11,7 @@
 
                 <!-- Logo -->
                 <a href="#" class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo.svg') }}" class="h-10" alt="Logo ISSSTE" />
+                    <img src="<?php echo e(asset('images/logo.svg')); ?>" class="h-10" alt="Logo ISSSTE" />
                     <span class="text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                         UNIDAD DE ABASTO ISSSTE
                     </span>
@@ -21,32 +21,34 @@
             <!-- Perfil de Usuario -->
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
-                    @auth
+                    <?php if(auth()->guard()->check()): ?>
                         <div>
                             <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                 <span class="sr-only">Open user menu</span>
-                                <img class="w-8 h-8 rounded-full" src="{{ auth()->user()->profile_photo_url }}" alt="user photo">
+                                <img class="w-8 h-8 rounded-full" src="<?php echo e(auth()->user()->profile_photo_url); ?>" alt="user photo">
                             </button>
                         </div>
                         <!-- Menú desplegable del usuario -->
                         <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
                             <div class="px-4 py-3">
                                 <p class="text-sm text-gray-900 dark:text-white">
-                                    {{ auth()->user()->name }}
+                                    <?php echo e(auth()->user()->name); ?>
+
                                 </p>
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
-                                    {{ auth()->user()->email }}
+                                    <?php echo e(auth()->user()->email); ?>
+
                                 </p>
                             </div>
                             <ul class="py-1">
                                 <li>
-                                    <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <a href="<?php echo e(route('profile.show')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                                         Configuración
                                     </a>
                                 </li>
                                 <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
+                                    <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                        <?php echo csrf_field(); ?>
                                         <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                                             Cerrar sesión
                                         </button>
@@ -54,13 +56,14 @@
                                 </li>
                             </ul>
                         </div>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                    <?php else: ?>
+                        <a href="<?php echo e(route('login')); ?>" class="text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                             Iniciar sesión
                         </a>
-                    @endauth
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
 </nav>
+<?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/layouts/partials/admin/navigation.blade.php ENDPATH**/ ?>

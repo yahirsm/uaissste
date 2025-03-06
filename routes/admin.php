@@ -1,8 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
-Route::get ('/', function(){
-
-    return view('admin.dashboard');
-}) ->name( 'dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('layouts.admin');
+    })->name('admin.dashboard');
+});

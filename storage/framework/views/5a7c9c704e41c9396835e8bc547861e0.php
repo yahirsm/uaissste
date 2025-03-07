@@ -9,20 +9,20 @@
 <?php endif; ?>
 <?php $component->withAttributes(['submit' => 'updateProfileInformation']); ?>
      <?php $__env->slot('title', null, []); ?> 
-        <?php echo e(__('Profile Information')); ?>
+        <?php echo e(__('Información del perfil')); ?>
 
      <?php $__env->endSlot(); ?>
 
      <?php $__env->slot('description', null, []); ?> 
-        <?php echo e(__('Update your account\'s profile information and email address.')); ?>
+        <?php echo e(__('Actualiza la información de tu cuenta y la dirección de correo electrónico.')); ?>
 
      <?php $__env->endSlot(); ?>
 
      <?php $__env->slot('form', null, []); ?> 
-        <!-- Profile Photo -->
+        <!-- Foto de perfil -->
         <!--[if BLOCK]><![endif]--><?php if(Laravel\Jetstream\Jetstream::managesProfilePhotos()): ?>
             <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
-                <!-- Profile Photo File Input -->
+                <!-- Entrada de archivo para la foto de perfil -->
                 <input type="file" id="photo" class="hidden"
                             wire:model.live="photo"
                             x-ref="photo"
@@ -37,14 +37,14 @@
 
                 <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'photo','value' => ''.e(__('Photo')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'photo','value' => ''.e(__('Foto')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['for' => 'photo','value' => ''.e(__('Photo')).'']); ?>
+<?php $component->withAttributes(['for' => 'photo','value' => ''.e(__('Foto')).'']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginald8ba2b4c22a13c55321e34443c386276)): ?>
@@ -56,12 +56,12 @@
 <?php unset($__componentOriginald8ba2b4c22a13c55321e34443c386276); ?>
 <?php endif; ?>
 
-                <!-- Current Profile Photo -->
+                <!-- Foto de perfil actual -->
                 <div class="mt-2" x-show="! photoPreview">
                     <img src="<?php echo e($this->user->profile_photo_url); ?>" alt="<?php echo e($this->user->name); ?>" class="rounded-full size-20 object-cover">
                 </div>
 
-                <!-- New Profile Photo Preview -->
+                <!-- Vista previa de la nueva foto de perfil -->
                 <div class="mt-2" x-show="photoPreview" style="display: none;">
                     <span class="block rounded-full size-20 bg-cover bg-no-repeat bg-center"
                           x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
@@ -78,7 +78,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['class' => 'mt-2 me-2','type' => 'button','x-on:click.prevent' => '$refs.photo.click()']); ?>
-                    <?php echo e(__('Select A New Photo')); ?>
+                    <?php echo e(__('Seleccionar una nueva foto')); ?>
 
                  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -102,7 +102,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['type' => 'button','class' => 'mt-2','wire:click' => 'deleteProfilePhoto']); ?>
-                        <?php echo e(__('Remove Photo')); ?>
+                        <?php echo e(__('Eliminar foto')); ?>
 
                      <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -139,18 +139,18 @@
             </div>
         <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
 
-        <!-- Name -->
+        <!-- Nombre -->
         <div class="col-span-6 sm:col-span-4">
             <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'name','value' => ''.e(__('Name')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'name','value' => ''.e(__('Nombre')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['for' => 'name','value' => ''.e(__('Name')).'']); ?>
+<?php $component->withAttributes(['for' => 'name','value' => ''.e(__('Nombre')).'']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginald8ba2b4c22a13c55321e34443c386276)): ?>
@@ -203,18 +203,18 @@
 <?php endif; ?>
         </div>
 
-        <!-- Email -->
+        <!-- Correo electrónico -->
         <div class="col-span-6 sm:col-span-4">
             <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'email','value' => ''.e(__('Email')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'email','value' => ''.e(__('Correo electrónico')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['for' => 'email','value' => ''.e(__('Email')).'']); ?>
+<?php $component->withAttributes(['for' => 'email','value' => ''.e(__('Correo electrónico')).'']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginald8ba2b4c22a13c55321e34443c386276)): ?>
@@ -268,18 +268,18 @@
 
             <!--[if BLOCK]><![endif]--><?php if(Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) && ! $this->user->hasVerifiedEmail()): ?>
                 <p class="text-sm mt-2">
-                    <?php echo e(__('Your email address is unverified.')); ?>
+                    <?php echo e(__('Tu dirección de correo electrónico no está verificada.')); ?>
 
 
                     <button type="button" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" wire:click.prevent="sendEmailVerification">
-                        <?php echo e(__('Click here to re-send the verification email.')); ?>
+                        <?php echo e(__('Haz clic aquí para reenviar el correo de verificación.')); ?>
 
                     </button>
                 </p>
 
                 <!--[if BLOCK]><![endif]--><?php if($this->verificationLinkSent): ?>
                     <p class="mt-2 font-medium text-sm text-green-600">
-                        <?php echo e(__('A new verification link has been sent to your email address.')); ?>
+                        <?php echo e(__('Se ha enviado un nuevo enlace de verificación a tu dirección de correo electrónico.')); ?>
 
                     </p>
                 <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
@@ -298,7 +298,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['class' => 'me-3','on' => 'saved']); ?>
-            <?php echo e(__('Saved.')); ?>
+            <?php echo e(__('Guardado.')); ?>
 
          <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -321,7 +321,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['wire:loading.attr' => 'disabled','wire:target' => 'photo']); ?>
-            <?php echo e(__('Save')); ?>
+            <?php echo e(__('Guardar')); ?>
 
          <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>

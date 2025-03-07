@@ -1,9 +1,18 @@
 <x-app-layout>
+    @include('layouts.partials.admin.navigation')  <!-- Navbar que ya has utilizado -->
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Perfil') }} <!-- Cambiado a "Perfil" para que esté en español -->
+                <span class="ml-4 font-medium">
+                    <a href="{{ route('dashboard') }}" class="text-gray-800 hover:text-gray-800">{{ __('Dashboard') }}</a>
+                </span>
+            </h2>
+        </div>
     </x-slot>
+    
+    
 
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">

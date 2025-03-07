@@ -1,7 +1,9 @@
 <?php
 
+ // Importación del controlador UserController
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController; // Importación del controlador UserController
+use App\Http\Controllers\InventarioController; // Importación del InventarioController
 
 // Redirigir la página de inicio al login
 Route::get('/', function () {
@@ -19,10 +21,8 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
     
-    // Ruta para la vista de inventario
-    Route::get('/inventario', function () {
-        return view('inventario.index');
-    })->name('inventario.index');
+    // Ruta para la vista de inventario (usando el controlador)
+    Route::get('/inventario', [InventarioController::class, 'index'])->name('inventario.index');
     
     // Ruta para la vista de usuarios (modificada de la misma forma que inventario)
     Route::get('/usuarios', function () {

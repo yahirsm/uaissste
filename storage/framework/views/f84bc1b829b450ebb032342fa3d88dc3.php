@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-        <title><?php echo e(config('app.name', 'Laravel')); ?></title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <title><?php echo e(config('app.name', 'ISSSTE')); ?></title>
 
-        <!-- Scripts -->
-        <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-        <!-- Styles -->
-        <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::styles(); ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    </head>
-    <body class="font-sans antialiased ">
-        <?php if (isset($component)) { $__componentOriginalff9615640ecc9fe720b9f7641382872b = $component; } ?>
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
+
+    <!-- Styles -->
+    <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::styles(); ?>
+
+</head>
+
+<body class="font-sans antialiased ">
+    <?php if (isset($component)) { $__componentOriginalff9615640ecc9fe720b9f7641382872b = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalff9615640ecc9fe720b9f7641382872b = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.banner','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('banner'); ?>
@@ -40,8 +47,8 @@
 <?php unset($__componentOriginalff9615640ecc9fe720b9f7641382872b); ?>
 <?php endif; ?>
 
-        <div class="min-h-screen bg-gray-100">
-            <?php
+    <div class="min-h-screen bg-gray-100">
+        <?php
 $__split = function ($name, $params = []) {
     return [$name, $params];
 };
@@ -58,27 +65,28 @@ unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
 
-            <!-- Page Heading -->
-            <?php if(isset($header)): ?>
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        <?php echo e($header); ?>
+        <!-- Page Heading -->
+        <?php if(isset($header)): ?>
+            <header class="bg-white shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <?php echo e($header); ?>
 
-                    </div>
-                </header>
-            <?php endif; ?>
+                </div>
+            </header>
+        <?php endif; ?>
 
-            <!-- Page Content -->
-            <main>
-                <?php echo e($slot); ?>
+        <!-- Page Content -->
+        <main>
+            <?php echo e($slot); ?>
 
-            </main>
-        </div>
+        </main>
+    </div>
 
-        <?php echo $__env->yieldPushContent('modals'); ?>
+    <?php echo $__env->yieldPushContent('modals'); ?>
 
-        <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
+    <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
 
-    </body>
+</body>
+
 </html>
 <?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/layouts/app.blade.php ENDPATH**/ ?>

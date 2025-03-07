@@ -8,12 +8,20 @@
 <?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
-     <?php $__env->slot('header', null, []); ?> 
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <?php echo e(__('Profile')); ?>
+    <?php echo $__env->make('layouts.partials.admin.navigation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>  <!-- Navbar que ya has utilizado -->
 
-        </h2>
+     <?php $__env->slot('header', null, []); ?> 
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <?php echo e(__('Perfil')); ?> <!-- Cambiado a "Perfil" para que esté en español -->
+                <span class="ml-4 font-medium">
+                    <a href="<?php echo e(route('dashboard')); ?>" class="text-gray-800 hover:text-gray-800"><?php echo e(__('Dashboard')); ?></a>
+                </span>
+            </h2>
+        </div>
      <?php $__env->endSlot(); ?>
+    
+    
 
     <div>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">

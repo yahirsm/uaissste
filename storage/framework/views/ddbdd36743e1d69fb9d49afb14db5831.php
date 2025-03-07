@@ -9,24 +9,24 @@
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
      <?php $__env->slot('title', null, []); ?> 
-        <?php echo e(__('Browser Sessions')); ?>
+        <?php echo e(__('Sesiones del navegador')); ?>
 
      <?php $__env->endSlot(); ?>
 
      <?php $__env->slot('description', null, []); ?> 
-        <?php echo e(__('Manage and log out your active sessions on other browsers and devices.')); ?>
+        <?php echo e(__('Gestiona y cierra tus sesiones activas en otros navegadores y dispositivos.')); ?>
 
      <?php $__env->endSlot(); ?>
 
      <?php $__env->slot('content', null, []); ?> 
         <div class="max-w-xl text-sm text-gray-600">
-            <?php echo e(__('If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.')); ?>
+            <?php echo e(__('Si es necesario, puedes cerrar todas tus otras sesiones de navegador en todos tus dispositivos. Algunas de tus sesiones recientes se muestran a continuación; sin embargo, esta lista puede no ser exhaustiva. Si crees que tu cuenta ha sido comprometida, también deberías actualizar tu contraseña.')); ?>
 
         </div>
 
         <!--[if BLOCK]><![endif]--><?php if(count($this->sessions) > 0): ?>
             <div class="mt-5 space-y-6">
-                <!-- Other Browser Sessions -->
+                <!-- Otras sesiones del navegador -->
                 <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $this->sessions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $session): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="flex items-center">
                         <div>
@@ -43,7 +43,7 @@
 
                         <div class="ms-3">
                             <div class="text-sm text-gray-600">
-                                <?php echo e($session->agent->platform() ? $session->agent->platform() : __('Unknown')); ?> - <?php echo e($session->agent->browser() ? $session->agent->browser() : __('Unknown')); ?>
+                                <?php echo e($session->agent->platform() ? $session->agent->platform() : __('Desconocido')); ?> - <?php echo e($session->agent->browser() ? $session->agent->browser() : __('Desconocido')); ?>
 
                             </div>
 
@@ -52,9 +52,9 @@
                                     <?php echo e($session->ip_address); ?>,
 
                                     <!--[if BLOCK]><![endif]--><?php if($session->is_current_device): ?>
-                                        <span class="text-green-500 font-semibold"><?php echo e(__('This device')); ?></span>
+                                        <span class="text-green-500 font-semibold"><?php echo e(__('Este dispositivo')); ?></span>
                                     <?php else: ?>
-                                        <?php echo e(__('Last active')); ?> <?php echo e($session->last_active); ?>
+                                        <?php echo e(__('Última actividad')); ?> <?php echo e($session->last_active); ?>
 
                                     <?php endif; ?><!--[if ENDBLOCK]><![endif]-->
                                 </div>
@@ -76,7 +76,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['wire:click' => 'confirmLogout','wire:loading.attr' => 'disabled']); ?>
-                <?php echo e(__('Log Out Other Browser Sessions')); ?>
+                <?php echo e(__('Cerrar sesión en otras sesiones de navegador')); ?>
 
              <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -99,7 +99,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['class' => 'ms-3','on' => 'loggedOut']); ?>
-                <?php echo e(__('Done.')); ?>
+                <?php echo e(__('Hecho.')); ?>
 
              <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -113,7 +113,7 @@
 <?php endif; ?>
         </div>
 
-        <!-- Log Out Other Devices Confirmation Modal -->
+        <!-- Modal de confirmación para cerrar sesión en otros dispositivos -->
         <?php if (isset($component)) { $__componentOriginal49bd1c1dd878e22e0fb84faabf295a3f = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal49bd1c1dd878e22e0fb84faabf295a3f = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dialog-modal','data' => ['wire:model.live' => 'confirmingLogout']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -125,25 +125,25 @@
 <?php endif; ?>
 <?php $component->withAttributes(['wire:model.live' => 'confirmingLogout']); ?>
              <?php $__env->slot('title', null, []); ?> 
-                <?php echo e(__('Log Out Other Browser Sessions')); ?>
+                <?php echo e(__('Cerrar sesión en otras sesiones de navegador')); ?>
 
              <?php $__env->endSlot(); ?>
 
              <?php $__env->slot('content', null, []); ?> 
-                <?php echo e(__('Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.')); ?>
+                <?php echo e(__('Por favor ingresa tu contraseña para confirmar que deseas cerrar sesión en tus otras sesiones de navegador en todos tus dispositivos.')); ?>
 
 
                 <div class="mt-4" x-data="{}" x-on:confirming-logout-other-browser-sessions.window="setTimeout(() => $refs.password.focus(), 250)">
                     <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'password','class' => 'mt-1 block w-3/4','autocomplete' => 'current-password','placeholder' => ''.e(__('Password')).'','xRef' => 'password','wire:model' => 'password','wire:keydown.enter' => 'logoutOtherBrowserSessions']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['type' => 'password','class' => 'mt-1 block w-3/4','autocomplete' => 'current-password','placeholder' => ''.e(__('Contraseña')).'','xRef' => 'password','wire:model' => 'password','wire:keydown.enter' => 'logoutOtherBrowserSessions']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['type' => 'password','class' => 'mt-1 block w-3/4','autocomplete' => 'current-password','placeholder' => ''.e(__('Password')).'','x-ref' => 'password','wire:model' => 'password','wire:keydown.enter' => 'logoutOtherBrowserSessions']); ?>
+<?php $component->withAttributes(['type' => 'password','class' => 'mt-1 block w-3/4','autocomplete' => 'current-password','placeholder' => ''.e(__('Contraseña')).'','x-ref' => 'password','wire:model' => 'password','wire:keydown.enter' => 'logoutOtherBrowserSessions']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -189,7 +189,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['wire:click' => '$toggle(\'confirmingLogout\')','wire:loading.attr' => 'disabled']); ?>
-                    <?php echo e(__('Cancel')); ?>
+                    <?php echo e(__('Cancelar')); ?>
 
                  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -212,7 +212,7 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['class' => 'ms-3','wire:click' => 'logoutOtherBrowserSessions','wire:loading.attr' => 'disabled']); ?>
-                    <?php echo e(__('Log Out Other Browser Sessions')); ?>
+                    <?php echo e(__('Cerrar sesión en otras sesiones de navegador')); ?>
 
                  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>

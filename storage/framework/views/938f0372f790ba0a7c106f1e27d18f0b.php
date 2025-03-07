@@ -29,7 +29,7 @@
             
             <!-- Botones de acceso rápido -->
             <div class="mt-6 flex flex-wrap justify-center gap-6">
-                <a href="#" class="flex flex-col items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition w-48 h-24">
+                <a href="<?php echo e(route('inventario.index')); ?>" class="flex flex-col items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition w-48 h-24">
                     <i class="fas fa-boxes text-3xl mb-2"></i>
                     <span>Inventario</span>
                 </a>

@@ -39,11 +39,7 @@
             </div>
 
             <div class="flex items-center justify-between mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-red-700 hover:text-red-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600" href="{{ route('password.request') }}">
-                        ¿Olvidaste tu contraseña?
-                    </a>
-                @endif
+                
 
                 <x-button class="ms-4 bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg">
                     Iniciar Sesión

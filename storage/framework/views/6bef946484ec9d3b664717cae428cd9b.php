@@ -179,11 +179,7 @@ unset($__sessionArgs); ?>
             </div>
 
             <div class="flex items-center justify-between mt-4">
-                <?php if(Route::has('password.request')): ?>
-                    <a class="underline text-sm text-red-700 hover:text-red-800 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600" href="<?php echo e(route('password.request')); ?>">
-                        ¿Olvidaste tu contraseña?
-                    </a>
-                <?php endif; ?>
+                
 
                 <?php if (isset($component)) { $__componentOriginald0f1fd2689e4bb7060122a5b91fe8561 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald0f1fd2689e4bb7060122a5b91fe8561 = $attributes; } ?>

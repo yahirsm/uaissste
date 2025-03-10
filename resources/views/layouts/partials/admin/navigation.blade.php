@@ -9,13 +9,19 @@
                     </svg>
                 </button>
 
-                <!-- Logo -->
-                <a href="#" class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo.svg') }}" class="h-10" alt="Logo ISSSTE" />
-                    <span class="text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                        UNIDAD DE ABASTO ISSSTE
-                    </span>
+                <a href="" class="flex items-center gap-3">
+                    <img src="{{ asset('images/logo.svg') }}" class="h-10 md:h-12" alt="Logo ISSSTE" />
+                    <div class="flex flex-col">
+                        <span class="text-lg font-semibold sm:text-xl whitespace-nowrap dark:text-white">
+                            UNIDAD DE ABASTO
+                        </span>
+                        <span class="text-sm font-medium sm:text-base text-gray-600 dark:text-gray-300">
+                            PRESIDENTE BENITO JUÁREZ DEL ISSSTE
+                        </span>
+                    </div>
                 </a>
+                
+                
             </div>
 
             <!-- Perfil de Usuario -->

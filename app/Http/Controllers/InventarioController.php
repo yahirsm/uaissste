@@ -15,7 +15,7 @@ class InventarioController extends Controller
     $materiales = Material::when($search, function ($query, $search) {
         return $query->where('clave', 'like', "%$search%")
                      ->orWhere('descripcion', 'like', "%$search%");
-    })->paginate(10); 
+    })->paginate(7); 
 
     return view('inventario.index', compact('materiales'));
 }

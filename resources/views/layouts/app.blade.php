@@ -40,9 +40,9 @@
         @endif
 
         <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+        @yield('content')
+
+        {{ $slot ?? '' }}
     </div>
 
     @stack('modals')

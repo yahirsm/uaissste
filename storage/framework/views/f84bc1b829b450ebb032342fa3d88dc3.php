@@ -76,10 +76,10 @@ if (isset($__slots)) unset($__slots);
         <?php endif; ?>
 
         <!-- Page Content -->
-        <main>
-            <?php echo e($slot); ?>
+        <?php echo $__env->yieldContent('content'); ?>
 
-        </main>
+        <?php echo e($slot ?? ''); ?>
+
     </div>
 
     <?php echo $__env->yieldPushContent('modals'); ?>

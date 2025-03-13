@@ -12,9 +12,10 @@
         [
             'name' => 'Usuarios',
             'icon' => 'fa-solid fa-users',
-            'route' => route('usuarios.usuarios'),
-            'active' => request()->routeIs('usuarios.usuarios'),
+            'route' => route('usuarios.index'), // ✅ CAMBIADO A usuarios.index
+            'active' => request()->routeIs('usuarios.index'), // ✅ CAMBIADO A usuarios.index
         ],
+
         [
             'name' => 'Inventario',
             'icon' => 'fa-solid fa-boxes',
@@ -36,7 +37,7 @@
                 [
                     'name' => 'Solicitud',
                     'route' => '#',
-                    'active' => False,
+                    'active' => false,
                 ],
                 [
                     'name' => 'Pedidos',
@@ -68,11 +69,14 @@
                             class="flex items-center w-full p-2 rounded-lg transition duration-300 <?php echo e($item['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'); ?> group"
                             onclick="toggleSubmenu(this)">
                             <span class="w-5 h-5 inline-flex justify-center items-center">
-                                <i class="<?php echo e($item['icon']); ?> <?php echo e($item['active'] ? 'text-white' : 'text-gray-800'); ?>"></i>
+                                <i
+                                    class="<?php echo e($item['icon']); ?> <?php echo e($item['active'] ? 'text-white' : 'text-gray-800'); ?>"></i>
                             </span>
                             <span class="ms-3"><?php echo e($item['name']); ?></span>
-                            <svg class="w-3 h-3 ms-auto transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            <svg class="w-3 h-3 ms-auto transition-transform duration-200"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 4 4 4-4" />
                             </svg>
                         </button>
                         <ul class="py-2 space-y-2 hidden">
@@ -91,7 +95,8 @@
                         <a href="<?php echo e($item['route']); ?>"
                             class="flex items-center p-2 rounded-lg transition duration-300 <?php echo e($item['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'); ?> group">
                             <span class="w-5 h-5 inline-flex justify-center items-center">
-                                <i class="<?php echo e($item['icon']); ?> <?php echo e($item['active'] ? 'text-white' : 'text-gray-800'); ?>"></i>
+                                <i
+                                    class="<?php echo e($item['icon']); ?> <?php echo e($item['active'] ? 'text-white' : 'text-gray-800'); ?>"></i>
                             </span>
                             <span class="ms-3"><?php echo e($item['name']); ?></span>
                         </a>
@@ -107,7 +112,7 @@
     function toggleSubmenu(button) {
         let submenu = button.nextElementSibling;
         let icon = button.querySelector('svg');
-        
+
         submenu.classList.toggle('hidden');
         icon.classList.toggle('rotate-180');
     }

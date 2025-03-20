@@ -9,7 +9,15 @@ export default {
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './resources/**/*.js',
+        './resources/**/*.vue',
         './node_modules/flowbite/**/*.js'
+    ],
+    safelist: [
+        'bg-blue-500', 'hover:bg-blue-700',
+        'bg-yellow-500', 'hover:bg-yellow-600',
+        'bg-red-500', 'hover:bg-red-700',
+        'text-white'
     ],
     theme: {
         extend: {
@@ -21,6 +29,6 @@ export default {
     plugins: [
         forms,
         typography,
-        require('flowbite/plugin')
+        require('flowbite/plugin'),
     ],
 }

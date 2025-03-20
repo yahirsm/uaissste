@@ -11,10 +11,11 @@ class EmpleadoController extends Controller
 {
     // Mostrar lista de empleados
     public function index()
-    {
-        $empleados = Empleado::with('servicioActual', 'plaza')->get(); // Carga relaciones correctamente
-        return view('usuarios.usuarios', compact('empleados'));
-    }
+{
+    $empleados = Empleado::with(['servicioActual', 'plaza'])->paginate(10); // Usa paginate() en lugar de get()
+    return view('usuarios.usuarios', compact('empleados'));
+}
+
     
 
     // Mostrar un empleado específico

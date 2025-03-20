@@ -5,3 +5,16 @@
 [x-cloak] {
     display: none;
 }
+
+/* Clases personalizadas */
+.btn-blue {
+    @apply bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-700 transition duration-150;
+}
+
+.btn-yellow {
+    @apply bg-yellow-500 text-white py-1 px-3 rounded-md hover:bg-yellow-600 transition duration-150;
+}
+
+.btn-red {
+    @apply bg-red-500 text-white py-1 px-3 rounded-md hover:bg-red-700 transition duration-150;
+}

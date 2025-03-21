@@ -51,8 +51,13 @@
                             <tr class="border-b hover:bg-gray-100">
                                 <td class="px-6 py-3">{{ $material->clave }}</td>
                                 <td class="px-6 py-3">{{ $material->descripcion }}</td>
-                                <td class="px-6 py-3">{{ $material->tipo_insumo }}</td>
                                 <td class="px-6 py-3">
+                                    @if ($material->tipoInsumo)
+                                        {{ $material->tipoInsumo->nombre }}
+                                    @else
+                                        <span class="text-red-600">Sin tipo</span>
+                                    @endif
+                                </td>                                <td class="px-6 py-3">
                                     @if ($material->partida)
                                         {{ $material->partida->nombre }}
                                     @else

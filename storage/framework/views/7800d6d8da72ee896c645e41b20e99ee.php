@@ -60,8 +60,14 @@
                             <tr class="border-b hover:bg-gray-100">
                                 <td class="px-6 py-3"><?php echo e($material->clave); ?></td>
                                 <td class="px-6 py-3"><?php echo e($material->descripcion); ?></td>
-                                <td class="px-6 py-3"><?php echo e($material->tipo_insumo); ?></td>
                                 <td class="px-6 py-3">
+                                    <?php if($material->tipoInsumo): ?>
+                                        <?php echo e($material->tipoInsumo->nombre); ?>
+
+                                    <?php else: ?>
+                                        <span class="text-red-600">Sin tipo</span>
+                                    <?php endif; ?>
+                                </td>                                <td class="px-6 py-3">
                                     <?php if($material->partida): ?>
                                         <?php echo e($material->partida->nombre); ?>
 

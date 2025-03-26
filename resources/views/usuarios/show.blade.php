@@ -56,6 +56,22 @@
                 </div>
             </div>
 
+            <!-- Servicios Anteriores -->
+            <div class="mt-6">
+                <h3 class="text-xl font-bold text-red-700 dark:text-white mb-2">
+                    <i class="fas fa-history"></i> Servicios Anteriores
+                </h3>
+                @if ($empleado->serviciosAnteriores->isNotEmpty())
+                <h3 class="text-xl font-bold mt-4">Historial de Servicios</h3>
+                <ul class="list-disc pl-5">
+                    @foreach ($empleado->serviciosAnteriores as $servicio)
+                        <li>{{ $servicio->nombre }} ({{ $servicio->pivot->fecha_inicio }} - {{ $servicio->pivot->fecha_fin ?? 'Actual' }})</li>
+                    @endforeach
+                </ul>
+            @endif
+            
+            </div>
+
             <!-- Botones -->
             <div class="mt-6 flex justify-end space-x-2">
                 <a href="{{ route('usuarios.index') }}"

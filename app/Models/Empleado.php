@@ -40,4 +40,11 @@ class Empleado extends Model
                     ->withTimestamps()
                     ->withPivot('fecha_inicio', 'fecha_fin');
     }
+    public function serviciosAnteriores()
+{
+    return $this->belongsToMany(Servicio::class, 'empleado_servicio')
+                ->withPivot('fecha_inicio', 'fecha_fin')
+                ->whereNotNull('fecha_fin'); // Filtra solo servicios anteriores
+}
+
 }

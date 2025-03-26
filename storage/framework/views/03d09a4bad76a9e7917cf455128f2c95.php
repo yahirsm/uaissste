@@ -1,6 +1,15 @@
-<x-app-layout>
-    @include('layouts.partials.admin.navigation')
-    @include('layouts.partials.admin.sidebar')
+<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
+<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+    <?php echo $__env->make('layouts.partials.admin.navigation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php echo $__env->make('layouts.partials.admin.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <div class="sm:ml-64 p-4 pt-20">
         <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -8,18 +17,18 @@
                 <i class="fas fa-user-plus mr-2"></i> Agregar Nuevo Usuario
             </h2>
 
-            @if ($errors->any())
+            <?php if($errors->any()): ?>
                 <div class="bg-red-500 text-white p-2 mb-4 rounded shadow-md dark:bg-red-700">
                     <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+                        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
-            @endif
+            <?php endif; ?>
 
-            <form action="{{ route('usuarios.store') }}" method="POST" class="space-y-4">
-                @csrf
+            <form action="<?php echo e(route('usuarios.store')); ?>" method="POST" class="space-y-4">
+                <?php echo csrf_field(); ?>
                 
                 <div>
                     <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
@@ -66,14 +75,14 @@
                     <label for="servicio_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Servicio Actual</label>
                     <select name="servicio_id" id="servicio_id" required 
                         class="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        @foreach ($servicios as $servicio)
-                            <option value="{{ $servicio->id }}">{{ $servicio->nombre }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $servicios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $servicio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($servicio->id); ?>"><?php echo e($servicio->nombre); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>
                 
                 <div class="flex justify-end space-x-2">
-                    <a href="{{ route('usuarios.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded">
+                    <a href="<?php echo e(route('usuarios.index')); ?>" class="bg-gray-500 hover:bg-gray-600 text-white font-medium px-4 py-2 rounded">
                         Cancelar
                     </a>
                     <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded">
@@ -83,4 +92,14 @@
             </form>
         </div>
     </div>
-</x-app-layout>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/usuarios/create.blade.php ENDPATH**/ ?>

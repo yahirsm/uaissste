@@ -2,7 +2,7 @@
     $links = [
         [
             'name' => 'Inicio',
-            'icon' => 'fa-solid fa-gauge-high',
+            'icon' => 'fa-solid fa-house-flag',
             'route' => route('dashboard'),
             'active' => request()->routeIs('dashboard'),
         ],
@@ -12,8 +12,8 @@
         [
             'name' => 'Usuarios',
             'icon' => 'fa-solid fa-users',
-            'route' => route('usuarios.index'), // ✅ CAMBIADO A usuarios.index
-            'active' => request()->routeIs('usuarios.index'), // ✅ CAMBIADO A usuarios.index
+            'route' => route('usuarios.index'),
+            'active' => request()->routeIs('usuarios.index'),
         ],
 
         [

@@ -40,4 +40,5 @@ Route::middleware([
     
     // ✅ Rutas para empleados (que son usuarios)
     Route::resource('usuarios', EmpleadoController::class);
+    
 });

@@ -4,9 +4,16 @@
 
     <div class="sm:ml-64 p-4 pt-20">
         <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-            <h2 class="text-3xl font-bold text-red-700 dark:text-red-400 mb-4">
-                <i class="fas fa-users mr-2"></i> Lista de Usuarios
-            </h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-3xl font-bold text-red-700 dark:text-red-400">
+                    <i class="fas fa-users mr-2"></i> Lista de Usuarios
+                </h2>
+                <!-- Botón para agregar un nuevo usuario -->
+                <a href="{{ route('usuarios.create') }}" class="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded flex items-center gap-2 transition">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Agregar Usuario</span>
+                </a>
+            </div>
 
             @if (session('success'))
                 <div class="bg-green-500 text-white p-2 mb-4 rounded shadow-md dark:bg-green-700">
@@ -59,7 +66,7 @@
                                             <span>Editar</span>
                                         </a>
 
-                                        <!-- Eliminar (Siempre en rojo) -->
+                                        <!-- Eliminar -->
                                         <form action="{{ route('usuarios.destroy', $empleado->id) }}" method="POST"
                                             onsubmit="return confirmarEliminacion('{{ $empleado->nombre }}');" class="inline">
                                             @csrf

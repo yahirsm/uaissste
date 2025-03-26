@@ -1,4 +1,4 @@
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"> 
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
             <div class="flex items-center justify-start"> 
@@ -20,45 +20,45 @@
                         </span>
                     </div>
                 </a>
-                
-                
             </div>
 
             <!-- Perfil de Usuario -->
             <div class="flex items-center">
-                <div class="flex items-center ms-3">
+                <div class="relative ms-3 flex items-center"> <!-- Cambié aquí para alinear la imagen y el nombre en una sola línea -->
                     @auth
-                        <div>
-                            <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                                <span class="sr-only">Open user menu</span>
-                                <img class="w-8 h-8 rounded-full" src="{{ auth()->user()->profile_photo_url }}" alt="user photo">
-                            </button>
+                        <button type="button" class="flex items-center text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                            <span class="sr-only">Open user menu</span>
+                            <img class="w-10 h-10 rounded-full" src="{{ auth()->user()->profile_photo_url }}" alt="user photo">
+                        </button>
+                        
+                        <!-- Nombre del Usuario -->
+                        <div class="ml-3 text-gray-800 dark:text-white">
+                            <span class="font-semibold">{{ auth()->user()->name }}</span>
                         </div>
+
                         <!-- Menú desplegable del usuario -->
-                        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-                            <div class="px-4 py-3">
-                                <p class="text-sm text-gray-900 dark:text-white">
+                        <div class="absolute right-0 z-50 hidden mt-2 w-64 bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
+                            <div class="px-4 py-4 text-center">
+                                <p class="text-sm font-semibold text-gray-900 dark:text-white">
                                     {{ auth()->user()->name }}
                                 </p>
-                                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300">
+                                <p class="text-xs font-medium text-gray-500 dark:text-gray-300">
                                     {{ auth()->user()->email }}
                                 </p>
                             </div>
-                            <ul class="py-1">
-                                <li>
-                                    <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-                                        Configuración
-                                    </a>
-                                </li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-                                            Cerrar sesión
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
+                            <div class="flex justify-around px-4 py-3">
+                                <a href="{{ route('profile.show') }}" class="flex items-center px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                                    <i class="fas fa-user mr-2"></i>
+                                    <span>Perfil</span>
+                                </a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="flex items-center px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-md hover:bg-red-700">
+                                        <i class="fas fa-power-off mr-2"></i>
+                                        <span>Cerrar sesión</span>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">

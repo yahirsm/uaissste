@@ -21,7 +21,7 @@
                             UNIDAD DE ABASTO
                         </span>
                         <span class="text-sm font-medium sm:text-base text-gray-600 dark:text-gray-300">
-                            PRESIDENTE BENITO JUÁREZ DEL ISSSTE
+                            HOSPITAL PRESIDENTE BENITO JUÁREZ DEL ISSSTE
                         </span>
                     </div>
                 </a>

@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\EmpleadoController;
-use Illuminate\Support\Facades\Auth; 
+use App\Http\Controllers\ReporteController;
+
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -12,7 +14,7 @@ Route::get('/', function () {
 
 Route::get('/login', function () {
     if (Auth::check()) {
-        return redirect()->route('dashboard'); 
+        return redirect()->route('dashboard');
     }
     return view('auth.login');
 })->name('login');
@@ -31,7 +33,9 @@ Route::middleware([
     });
 
     Route::get('/inventario', [InventarioController::class, 'index'])->name('inventario.index');
-    
+
     Route::resource('usuarios', EmpleadoController::class);
-    
+
+    Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+    Route::get('/reportes/inventario/pdf', [ReporteController::class, 'generarInventarioPDF'])->name('reportes.inventario.pdf');
 });

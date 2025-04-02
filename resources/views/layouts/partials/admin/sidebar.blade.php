@@ -25,8 +25,8 @@
         [
             'name' => 'Reportes',
             'icon' => 'fa-solid fa-chart-line',
-            'route' => '#',
-            'active' => false,
+            'route' => route('reportes.index'),
+            'active' =>  request()->routeIs('reportes.index'),
         ],
         [
             'name' => 'Distribución',
@@ -50,7 +50,7 @@
 @endphp
 
 <aside id="logo-sidebar"
-    class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+    class="fixed top-0 left-0 z-40 w-48 h-screen pt-20 transition-all duration-300 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700"
     aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
@@ -65,25 +65,28 @@
                 @elseif (isset($item['submenu']))
                     <li>
                         <button type="button"
-                            class="flex items-center w-full p-2 rounded-lg transition duration-300 {{ $item['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }} group"
+                            class="flex items-center justify-between w-full p-2 rounded-lg transition duration-300 
+                            {{ $item['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }}"
                             onclick="toggleSubmenu(this)">
-                            <span class="w-5 h-5 inline-flex justify-center items-center">
-                                <i
-                                    class="{{ $item['icon'] }} {{ $item['active'] ? 'text-white' : 'text-gray-800' }}"></i>
-                            </span>
-                            <span class="ms-3">{{ $item['name'] }}</span>
-                            <svg class="w-3 h-3 ms-auto transition-transform duration-200"
+                            <div class="flex items-center">
+                                <span class="w-5 h-5 flex justify-center items-center">
+                                    <i class="{{ $item['icon'] }} {{ $item['active'] ? 'text-white' : 'text-gray-800' }}"></i>
+                                </span>
+                                <span class="ms-3">{{ $item['name'] }}</span>
+                            </div>
+                            <svg class="w-3 h-3 transition-transform duration-200"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 4 4 4-4" />
                             </svg>
                         </button>
-                        <ul class="py-2 space-y-2 hidden">
+                        <ul class="py-2 space-y-2 {{ $item['active'] ? '' : 'hidden' }}">
                             @foreach ($item['submenu'] as $subitem)
                                 <li>
                                     <a href="{{ $subitem['route'] }}"
-                                        class="flex items-center p-2 pl-11 rounded-lg transition duration-300 {{ $subitem['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }}">
-                                        <span class="ms-3">{{ $subitem['name'] }}</span>
+                                        class="flex items-center p-2 pl-11 rounded-lg transition duration-300 
+                                        {{ $subitem['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                                        {{ $subitem['name'] }}
                                     </a>
                                 </li>
                             @endforeach
@@ -92,10 +95,10 @@
                 @else
                     <li>
                         <a href="{{ $item['route'] }}"
-                            class="flex items-center p-2 rounded-lg transition duration-300 {{ $item['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }} group">
-                            <span class="w-5 h-5 inline-flex justify-center items-center">
-                                <i
-                                    class="{{ $item['icon'] }} {{ $item['active'] ? 'text-white' : 'text-gray-800' }}"></i>
+                            class="flex items-center p-2 rounded-lg transition duration-300 
+                            {{ $item['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                            <span class="w-5 h-5 flex justify-center items-center">
+                                <i class="{{ $item['icon'] }} {{ $item['active'] ? 'text-white' : 'text-gray-800' }}"></i>
                             </span>
                             <span class="ms-3">{{ $item['name'] }}</span>
                         </a>
@@ -116,3 +119,5 @@
         icon.classList.toggle('rotate-180');
     }
 </script>
+
+

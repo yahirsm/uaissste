@@ -14,6 +14,7 @@ class ReporteController extends Controller
     }
 
     public function generarInventarioPDF()
+    
     {
         $materiales = Material::with(['partida', 'tipoInsumo'])->get();
 

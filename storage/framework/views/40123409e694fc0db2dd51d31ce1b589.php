@@ -2,73 +2,114 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte de Inventario</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            font-size: 14px;
-            margin: 20px;
+        @page {
+            margin: 160px 40px 100px 40px;
+            footer: html_footer;
         }
-        .header {
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        .encabezado {
             text-align: center;
-            margin-bottom: 20px;
+            margin-top: -120px;
         }
-        .header img {
+
+        .encabezado img {
             width: 100px;
+            margin-bottom: 10px;
         }
-        .header h2 {
-            color: #800000; /* Guinda */
+
+        .encabezado h2 {
+            color: #800000;
             margin: 5px 0;
         }
-        .subtitulo {
-            font-size: 16px;
-            color: #333;
+
+        .encabezado p {
+            margin: 2px 0;
         }
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-top: 20px; 
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            page-break-inside: auto;
         }
-        th, td { 
-            border: 1px solid black; 
-            padding: 8px; 
-            text-align: left; 
+
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: left;
         }
-        th { 
-            background-color: #800000; /* Guinda */
+
+        th {
+            background-color: #800000;
             color: white;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tr {
+            page-break-inside: avoid;
+        }
+
+        .footer {
+            font-size: 10px;
+            color: #666;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <img src="<?php echo e(public_path('images/Logo.svg')); ?>" alt="Logo ISSSTE"> 
-        <h2>REPORTE DE INVENTARIO</h2>
-        <p class="subtitulo">UNIDAD DE ABASTO - HOSPITAL REGIONAL PRESIDENTE BENITO JUÁREZ DEL ISSSTE</p>
-    </div>
+<?php
+    \Carbon\Carbon::setLocale('es');
+    $fecha = \Carbon\Carbon::now()->translatedFormat('l j \d\e F \d\e\l Y \a \l\a\s H:i') . ' hrs';
+?>
 
-    <table>
-        <thead>
+
+<div class="encabezado">
+    <img src="<?php echo e(public_path('images/Logo.svg')); ?>" alt="Logo ISSSTE">
+    <h2>REPORTE DE INVENTARIO</h2>
+    <p>UNIDAD DE ABASTO - HOSPITAL REGIONAL PRESIDENTE BENITO JUÁREZ DEL ISSSTE</p>
+    <p>Generado el <?php echo e($fecha); ?></p>
+</div>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Clave</th>
+            <th>Descripción</th>
+            <th>Partida</th>
+            <th>Tipo de Material</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php $__currentLoopData = $materiales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $material): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
-                <th>Clave</th>
-                <th>Descripción</th>
-                <th>Partida</th>
-                <th>Tipo de Material</th>
+                <td><?php echo e($material->clave); ?></td>
+                <td><?php echo e($material->descripcion); ?></td>
+                <td><?php echo e($material->partida->nombre ?? 'N/A'); ?></td>
+                <td><?php echo e($material->tipoInsumo->nombre ?? 'N/A'); ?></td>
             </tr>
-        </thead>
-        <tbody>
-            <?php $__currentLoopData = $materiales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $material): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <tr>
-                    <td><?php echo e($material->id); ?></td>
-                    <td><?php echo e($material->descripcion); ?></td>
-                    <td><?php echo e($material->partida->nombre ?? 'N/A'); ?></td>
-                    <td><?php echo e($material->tipoInsumo->nombre ?? 'N/A'); ?></td>
-                </tr>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </tbody>
-    </table>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    </tbody>
+</table>
+
+
+<htmlpagefooter name="footer">
+    <div class="footer">
+        Hospital Regional Presidente Benito Juárez del ISSSTE - Unidad de Abasto<br>
+        Página {PAGENO} de {nbpg}
+    </div>
+</htmlpagefooter>
 
 </body>
 </html>

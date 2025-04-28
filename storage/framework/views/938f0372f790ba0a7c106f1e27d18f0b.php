@@ -37,7 +37,7 @@
                     <i class="fas fa-receipt text-3xl mb-2"></i>
                     <span>Vales</span>
                 </a>
-                <a href="#" class="flex flex-col items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition w-48 h-24">
+                <a href="<?php echo e(route('reportes.index')); ?>" class="flex flex-col items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 px-6 rounded-lg shadow-md transition w-48 h-24">
                     <i class="fas fa-chart-line text-3xl mb-2"></i>
                     <span>Reportes</span>
                 </a>

@@ -9,7 +9,8 @@ class Partida extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'codigo'];
+   
+    protected $fillable = ['clave', 'nombre']; 
 
     public function materiales()
     {

@@ -9,24 +9,35 @@
         <form method="POST" action="{{ route('register') }}" class="space-y-4">
             @csrf
 
+            <!-- Nombre -->
             <div class="relative">
                 <x-label for="name" value="Nombre" />
                 <x-input id="name" class="block w-full pl-10" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                 <i class="fa-solid fa-user absolute left-3 top-10 text-gray-500"></i>
             </div>
 
+            <!-- Usuario (nuevo campo) -->
+            <div class="relative">
+                <x-label for="username" value="Usuario" />
+                <x-input id="username" class="block w-full pl-10" type="text" name="username" :value="old('username')" required autocomplete="username" />
+                <i class="fa-solid fa-user-circle absolute left-3 top-10 text-gray-500"></i>
+            </div>
+
+            <!-- Correo Electrónico -->
             <div class="relative">
                 <x-label for="email" value="Correo Electrónico" />
-                <x-input id="email" class="block w-full pl-10" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <x-input id="email" class="block w-full pl-10" type="email" name="email" :value="old('email')" required autocomplete="email" />
                 <i class="fa-solid fa-envelope absolute left-3 top-10 text-gray-500"></i>
             </div>
 
+            <!-- Contraseña -->
             <div class="relative">
                 <x-label for="password" value="Contraseña" />
                 <x-input id="password" class="block w-full pl-10" type="password" name="password" required autocomplete="new-password" />
                 <i class="fa-solid fa-lock absolute left-3 top-10 text-gray-500"></i>
             </div>
 
+            <!-- Confirmar Contraseña -->
             <div class="relative">
                 <x-label for="password_confirmation" value="Confirmar Contraseña" />
                 <x-input id="password_confirmation" class="block w-full pl-10" type="password" name="password_confirmation" required autocomplete="new-password" />

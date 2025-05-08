@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,14 +38,17 @@ class Empleado extends Model
     public function servicios()
     {
         return $this->belongsToMany(Servicio::class, 'empleado_servicio')
-                    ->withTimestamps()
-                    ->withPivot('fecha_inicio', 'fecha_fin');
+            ->withTimestamps()
+            ->withPivot('fecha_inicio', 'fecha_fin');
     }
     public function serviciosAnteriores()
-{
-    return $this->belongsToMany(Servicio::class, 'empleado_servicio')
-                ->withPivot('fecha_inicio', 'fecha_fin')
-                ->whereNotNull('fecha_fin'); // Filtra solo servicios anteriores
-}
-
+    {
+        return $this->belongsToMany(Servicio::class, 'empleado_servicio')
+            ->withPivot('fecha_inicio', 'fecha_fin')
+            ->whereNotNull('fecha_fin'); // Filtra solo servicios anteriores
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

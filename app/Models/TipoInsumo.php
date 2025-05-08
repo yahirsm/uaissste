@@ -8,7 +8,8 @@ class TipoInsumo extends Model
 {
     use HasFactory;
 
-    protected $table = 'tipos_insumo';  // Nombre real de la tabla
+    protected $table = 'tipos_insumo';  
+    protected $fillable = ['id', 'nombre']; 
     protected $primaryKey = 'tipo_insumo_id'; // Clave primaria correcta
 
     public $timestamps = false; // Si no usas `created_at` y `updated_at`

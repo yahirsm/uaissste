@@ -34,39 +34,44 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
-
-        // ✅ Límite de intentos de inicio de sesión (5 intentos por minuto)
+    
+        // ✅ No pongas Fortify::username() aquí. No es necesario.
+    
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input('username')) . '|' . $request->ip());
             return Limit::perMinute(5)->by($throttleKey);
         });
-
+    
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
-
-        // ✅ Validación personalizada de inicio de sesión
+    
         Fortify::authenticateUsing(function (Request $request) {
-            // ✅ Validar si los campos están vacíos
-            if (!$request->email || !$request->password) {
+            $username = trim($request->username);
+        
+            if (!$username || !$request->password) {
                 session()->flash('error', 'Todos los campos son obligatorios.');
                 return null;
             }
-
-            // ✅ Validar formato del correo electrónico
-            if (!filter_var($request->email, FILTER_VALIDATE_EMAIL) || !preg_match('/@.+\.(com|mx|org|net)$/', $request->email)) {
-                session()->flash('error', 'El correo electrónico debe tener un formato válido (por ejemplo, usuario@dominio.com).');
+        
+            if (!preg_match('/^[a-z0-9]+$/i', $username)) {
+                session()->flash('error', 'El nombre de usuario solo puede contener letras o números sin espacios.');
                 return null;
             }
-
-            $user = User::where('email', $request->email)->first();
-
+            
+            
+            $user = User::where('username', $username)->first();
+        
             if ($user && Hash::check($request->password, $user->password)) {
-                return $user; 
+                return $user;
             }
-
-            session()->flash('error', 'Correo o contraseña incorrectos. Verifica tus datos.');
+        
+            session()->flash('error', 'Usuario o contraseña incorrectos. Verifica tus datos.');
             return null;
         });
+        
     }
+    
+    
+    
 }

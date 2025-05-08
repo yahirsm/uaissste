@@ -66,6 +66,36 @@
                     </p>
                 </div>
             </div>
+            <!-- Usuario -->
+<?php if($empleado->user): ?>
+<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Usuario -->
+    <div>
+        <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Usuario:</p>
+        <p class="text-lg text-gray-900 dark:text-white bg-blue-50 dark:bg-gray-800 px-3 py-2 rounded border border-gray-300 dark:border-gray-600">
+            <?php echo e($empleado->user->username); ?>
+
+        </p>
+    </div>
+
+    <!-- Contraseña -->
+    <div>
+        <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Contraseña:</p>
+        <div class="relative">
+            <input type="password" id="passwordField"
+                value="<?php echo e(strtolower(substr($empleado->nombre, 0, 1)) . strtolower(substr($empleado->primer_apellido, 0, 1)) . strtolower(substr($empleado->segundo_apellido ?? 'x', 0, 1)) . $empleado->numero_empleado . '#'); ?>"
+                class="w-full p-2 pr-10 border rounded bg-blue-50 text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                readonly>
+            <button type="button" onclick="togglePassword()"
+                class="absolute right-2 top-2 text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+                <i id="eyeIcon" class="fas fa-eye"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+
 
             <!-- Servicios Anteriores -->
             <div class="mt-6">
@@ -73,14 +103,15 @@
                     <i class="fas fa-history"></i> Servicios Anteriores
                 </h3>
                 <?php if($empleado->serviciosAnteriores->isNotEmpty()): ?>
-                <h3 class="text-xl font-bold mt-4">Historial de Servicios</h3>
-                <ul class="list-disc pl-5">
-                    <?php $__currentLoopData = $empleado->serviciosAnteriores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $servicio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li><?php echo e($servicio->nombre); ?> (<?php echo e($servicio->pivot->fecha_inicio); ?> - <?php echo e($servicio->pivot->fecha_fin ?? 'Actual'); ?>)</li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </ul>
-            <?php endif; ?>
-            
+                    <h3 class="text-xl font-bold mt-4">Historial de Servicios</h3>
+                    <ul class="list-disc pl-5">
+                        <?php $__currentLoopData = $empleado->serviciosAnteriores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $servicio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li><?php echo e($servicio->nombre); ?> (<?php echo e($servicio->pivot->fecha_inicio); ?> -
+                                <?php echo e($servicio->pivot->fecha_fin ?? 'Actual'); ?>)</li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </ul>
+                <?php endif; ?>
+
             </div>
 
             <!-- Botones -->
@@ -106,4 +137,19 @@
 <?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
 <?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
 <?php endif; ?>
+<script>
+    function togglePassword() {
+        const input = document.getElementById('passwordField');
+        const icon = document.getElementById('eyeIcon');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+</script>
 <?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/usuarios/show.blade.php ENDPATH**/ ?>

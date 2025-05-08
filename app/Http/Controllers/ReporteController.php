@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Material;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Response;
+
+// Asegúrate que esta clase exista y esté correctamente instalada
+use Mpdf\Mpdf;
 
 class ReporteController extends Controller
 {
@@ -14,12 +16,23 @@ class ReporteController extends Controller
     }
 
     public function generarInventarioPDF()
-    
-    {
-        $materiales = Material::with(['partida', 'tipoInsumo'])->get();
+{
+    $materiales = Material::with(['partida', 'tipoInsumo'])->get();
 
-        $pdf = Pdf::loadView('reportes.inventario_pdf', compact('materiales'));
+    $html = view('reportes.inventario_pdf', compact('materiales'))->render();
 
-        return $pdf->download('reporte_inventario.pdf');
-    }
+    $mpdf = new \Mpdf\Mpdf([
+        'margin_top'    => 40,
+        'margin_bottom' => 30,
+        'margin_left'   => 10,
+        'margin_right'  => 10,
+    ]);
+
+    $mpdf->WriteHTML($html);
+
+    // Fuerza la descarga con nombre definido
+    return response($mpdf->Output('reporte_inventario.pdf', 'D'), 200, [
+        'Content-Type' => 'application/pdf',
+    ]);
+}
 }

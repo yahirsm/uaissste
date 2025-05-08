@@ -21,14 +21,16 @@
          <?php $__env->slot('logo', null, []); ?> 
             <img src="<?php echo e(asset('images/logo.svg')); ?>" alt="ISSSTE Logo" class="w-48 h-auto mx-auto">
          <?php $__env->endSlot(); ?>
+
         <head>
             <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
             <meta http-equiv="Cache-Control" content="post-check=0, pre-check=0" false>
             <meta http-equiv="Pragma" content="no-cache">
         </head>
-        
+
         <?php if(session('error')): ?>
-            <div id="alert" class="mb-4 px-4 py-3 bg-red-100 border border-red-400 text-red-700 rounded-md relative flex justify-between items-center">
+            <div id="alert"
+                class="mb-4 px-4 py-3 bg-red-100 border border-red-400 text-red-700 rounded-md relative flex justify-between items-center">
                 <div>
                     <strong class="font-bold">¡Error!</strong>
                     <span class="block sm:inline"><?php echo e(session('error')); ?></span>
@@ -39,7 +41,8 @@
             </div>
         <?php endif; ?>
 
-        <div id="formAlert" class="hidden mb-4 px-4 py-3 bg-red-100 border border-red-400 text-red-700 rounded-md relative flex justify-between items-center">
+        <div id="formAlert"
+            class="hidden mb-4 px-4 py-3 bg-red-100 border border-red-400 text-red-700 rounded-md relative flex justify-between items-center">
             <div>
                 <strong class="font-bold">¡Error!</strong>
                 <span id="alertMessage" class="block sm:inline"></span>
@@ -52,18 +55,18 @@
         <form id="loginForm" method="POST" action="<?php echo e(route('login')); ?>">
             <?php echo csrf_field(); ?>
 
-            <!-- Correo Electrónico -->
+            <!-- Usuario -->
             <div class="relative">
                 <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'email','value' => 'Correo Electrónico']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'username','value' => 'Usuario']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('label'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['for' => 'email','value' => 'Correo Electrónico']); ?>
+<?php $component->withAttributes(['for' => 'username','value' => 'Usuario']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginald8ba2b4c22a13c55321e34443c386276)): ?>
@@ -79,14 +82,14 @@
                 </div>
                 <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'email','class' => 'block mt-1 w-full border-gray-300 focus:border-red-700 focus:ring-red-700 pl-10','type' => 'email','name' => 'email','value' => ''.e(old('email')).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'username','class' => 'block mt-1 w-full border-gray-300 focus:border-red-700 focus:ring-red-700 pl-10','type' => 'text','name' => 'username','value' => ''.e(old('username')).'','placeholder' => 'ej. ramirez','autofocus' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'email','class' => 'block mt-1 w-full border-gray-300 focus:border-red-700 focus:ring-red-700 pl-10','type' => 'email','name' => 'email','value' => ''.e(old('email')).'']); ?>
+<?php $component->withAttributes(['id' => 'username','class' => 'block mt-1 w-full border-gray-300 focus:border-red-700 focus:ring-red-700 pl-10','type' => 'text','name' => 'username','value' => ''.e(old('username')).'','placeholder' => 'ej. ramirez','autofocus' => true]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -99,9 +102,9 @@
 <?php endif; ?>
             </div>
 
-            <!-- Contraseña -->
-            <div class="relative mt-4">
-                <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
+          <!-- Contraseña -->
+<div class="relative mt-4">
+    <?php if (isset($component)) { $__componentOriginald8ba2b4c22a13c55321e34443c386276 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald8ba2b4c22a13c55321e34443c386276 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.label','data' => ['for' => 'password','value' => 'Contraseña']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('label'); ?>
@@ -121,19 +124,19 @@
 <?php $component = $__componentOriginald8ba2b4c22a13c55321e34443c386276; ?>
 <?php unset($__componentOriginald8ba2b4c22a13c55321e34443c386276); ?>
 <?php endif; ?>
-                <div class="absolute top-3 left-3 text-gray-500">
-                    <i class="fas fa-lock"></i>
-                </div>
-                <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
+    <div class="absolute top-3 left-3 text-gray-500">
+        <i class="fas fa-lock"></i>
+    </div>
+    <?php if (isset($component)) { $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'password','class' => 'block mt-1 w-full border-gray-300 focus:border-red-700 focus:ring-red-700 pl-10','type' => 'password','name' => 'password']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input','data' => ['id' => 'password','class' => 'block mt-1 w-full border-gray-300 focus:border-red-700 focus:ring-red-700 pl-10 pr-10','type' => 'password','name' => 'password']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'password','class' => 'block mt-1 w-full border-gray-300 focus:border-red-700 focus:ring-red-700 pl-10','type' => 'password','name' => 'password']); ?>
+<?php $component->withAttributes(['id' => 'password','class' => 'block mt-1 w-full border-gray-300 focus:border-red-700 focus:ring-red-700 pl-10 pr-10','type' => 'password','name' => 'password']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc2fcfa88dc54fee60e0757a7e0572df1)): ?>
@@ -144,7 +147,11 @@
 <?php $component = $__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1; ?>
 <?php unset($__componentOriginalc2fcfa88dc54fee60e0757a7e0572df1); ?>
 <?php endif; ?>
-            </div>
+    <div class="absolute inset-y-0 right-3 flex items-center cursor-pointer" onclick="togglePassword()">
+        <i id="eyeIcon" class="fas fa-eye text-gray-500 transition-colors duration-200"></i>
+    </div>
+</div>
+
 
             <!-- Recuérdame -->
             <div class="block mt-4">
@@ -197,31 +204,64 @@
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const email = document.getElementById('email').value.trim();
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
 
-            if (!email || !password) {
+            if (!username || !password) {
                 let message = '';
-                if (!email) message += 'El correo electrónico es obligatorio. ';
+                if (!username) message += 'El usuario es obligatorio. ';
                 if (!password) message += 'La contraseña es obligatoria.';
 
-                const alertBox = document.getElementById('formAlert');
-                const alertMessage = document.getElementById('alertMessage');
-                alertMessage.textContent = message;
-                alertBox.classList.remove('hidden');
+                showFormAlert(message);
             } else {
                 this.submit();
             }
         });
+
+        document.getElementById('username').addEventListener('blur', function() {
+            const value = this.value.trim();
+            const pattern = /^[a-zA-Z]{3,}$/;
+
+            if (!pattern.test(value)) {
+                showFormAlert('El usuario solo puede contener letras y al menos 3 caracteres.');
+            } else {
+                closeFormAlert();
+            }
+        });
+
+    function togglePassword() {
+        const input = document.getElementById('password');
+        const icon = document.getElementById('eyeIcon');
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+            icon.classList.remove('text-gray-500');
+            icon.classList.add('text-red-700');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+            icon.classList.remove('text-red-700');
+            icon.classList.add('text-gray-500');
+        }
+    }
+
+
+        function showFormAlert(message) {
+            const alertBox = document.getElementById('formAlert');
+            const alertMessage = document.getElementById('alertMessage');
+            alertMessage.textContent = message;
+            alertBox.classList.remove('hidden');
+        }
 
         function closeAlert() {
             const alert = document.getElementById('alert');
             if (alert) {
                 alert.style.transition = 'opacity 0.3s ease';
                 alert.style.opacity = '0';
-                setTimeout(() => {
-                    alert.remove();
-                }, 300);
+                setTimeout(() => alert.remove(), 300);
             }
         }
 
@@ -230,9 +270,7 @@
             if (alert) {
                 alert.style.transition = 'opacity 0.3s ease';
                 alert.style.opacity = '0';
-                setTimeout(() => {
-                    alert.classList.add('hidden');
-                }, 300);
+                setTimeout(() => alert.classList.add('hidden'), 300);
             }
         }
     </script>

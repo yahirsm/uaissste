@@ -19,11 +19,7 @@
             margin-top: -120px;
         }
 
-        .encabezado img {
-            width: 100px;
-            margin-bottom: 10px;
-        }
-
+        
         .encabezado h2 {
             color: #800000;
             margin: 5px 0;
@@ -75,7 +71,7 @@
 
 
 <div class="encabezado">
-    <img src="<?php echo e(public_path('images/Logo.svg')); ?>" alt="Logo ISSSTE">
+    <img src="<?php echo e(public_path('images/Logo.svg')); ?>" alt="Logo ISSSTE" width="100">
     <h2>REPORTE DE INVENTARIO</h2>
     <p>UNIDAD DE ABASTO - HOSPITAL REGIONAL PRESIDENTE BENITO JUÁREZ DEL ISSSTE</p>
     <p>Generado el <?php echo e($fecha); ?></p>

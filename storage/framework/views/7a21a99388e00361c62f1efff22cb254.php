@@ -13,20 +13,56 @@
             'name' => 'Usuarios',
             'icon' => 'fa-solid fa-users',
             'route' => route('usuarios.index'),
-            'active' => request()->routeIs('usuarios.index'),
+            'active' =>
+                request()->routeIs('usuarios.index') ||
+                request()->routeIs('servicios.index') ||
+                request()->routeIs('plazas.index'),
+            'submenu' => [
+                [
+                    'name' => 'Usuarios',
+                    'icon' => 'fa-solid fa-user',
+                    'route' => route('usuarios.index'),
+                    'active' => request()->routeIs('usuarios.index'),
+                ],
+                [
+                    'name' => 'Servicios',
+                    'icon' => 'fa-solid fa-stethoscope',
+                    'route' => route('servicios.index'),
+                    'active' => request()->routeIs('servicios.index'),
+                ],
+                [
+                    'name' => 'Plazas',
+                    'icon' => 'fa-solid fa-briefcase',
+                    'route' => route('plazas.index'),
+                    'active' => request()->routeIs('plazas.index'),
+                ],
+            ],
         ],
-
         [
             'name' => 'Inventario',
-            'icon' => 'fa-solid fa-boxes',
+            'icon' => 'fa-solid fa-boxes-stacked',
             'route' => route('inventario.index'),
             'active' => request()->routeIs('inventario.index'),
+            'submenu' => [
+                [
+                    'name' => 'Inventario',
+                    'icon' => 'fa-solid fa-warehouse',
+                    'route' => route('inventario.index'),
+                    'active' => request()->routeIs('inventario.index'),
+                ],
+                [
+                    'name' => 'Partidas',
+                    'icon' => 'fa-solid fa-list-ol',
+                    'route' => route('inventario.partida'),
+                    'active' => request()->routeIs('inventario.partida'),
+                ],
+            ],
         ],
         [
             'name' => 'Reportes',
             'icon' => 'fa-solid fa-chart-line',
             'route' => route('reportes.index'),
-            'active' =>  request()->routeIs('reportes.index'),
+            'active' => request()->routeIs('reportes.index'),
         ],
         [
             'name' => 'Distribución',
@@ -36,11 +72,13 @@
             'submenu' => [
                 [
                     'name' => 'Solicitud',
+                    'icon' => 'fa-solid fa-file-signature',
                     'route' => '#',
                     'active' => false,
                 ],
                 [
                     'name' => 'Pedidos',
+                    'icon' => 'fa-solid fa-truck-fast',
                     'route' => '#',
                     'active' => false,
                 ],
@@ -75,8 +113,8 @@
                                 </span>
                                 <span class="ms-3"><?php echo e($item['name']); ?></span>
                             </div>
-                            <svg class="w-3 h-3 transition-transform duration-200"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <svg class="w-3 h-3 transition-transform duration-200 <?php echo e($item['active'] ? 'rotate-180' : ''); ?>" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 4 4 4-4" />
                             </svg>
@@ -87,6 +125,7 @@
                                     <a href="<?php echo e($subitem['route']); ?>"
                                         class="flex items-center p-2 pl-11 rounded-lg transition duration-300 
                                         <?php echo e($subitem['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'); ?>">
+                                        <i class="<?php echo e($subitem['icon']); ?> w-4 h-4 mr-2"></i>
                                         <?php echo e($subitem['name']); ?>
 
                                     </a>
@@ -121,6 +160,4 @@
         icon.classList.toggle('rotate-180');
     }
 </script>
-
-
 <?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/layouts/partials/admin/sidebar.blade.php ENDPATH**/ ?>

@@ -1,32 +1,32 @@
-
-<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
-<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('app-layout'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>
-    <div class="flex items-center justify-center h-screen">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold text-red-700 mb-4">Página no encontrada</h1>
-            <p class="text-gray-600 mb-6">La página que estás buscando no existe o ha sido eliminada.</p>
-            <a href="<?php echo e(route('dashboard')); ?>" 
-               class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-                Volver al inicio
-            </a>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Página no encontrada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen px-4">
+    <div class="bg-white px-8 py-10 rounded-2xl shadow-2xl max-w-lg w-full text-center border-t-8 border-red-700">
+        
+        <!-- Logo + texto institucional -->
+        <div class="flex flex-col items-center justify-center mb-6">
+            <img src="<?php echo e(asset('images/Logo.svg')); ?>" alt="Logo ISSSTE" class="w-20 mb-2">
+            <p class="text-xs text-yellow-600 font-semibold leading-tight">INSTITUTO DE SEGURIDAD Y SERVICIOS SOCIALES DE LOS TRABAJADORES DEL ESTADO</p>
         </div>
+
+        <!-- Mensaje de error -->
+        <h1 class="text-3xl font-extrabold text-red-700 mb-2">Página no encontrada</h1>
+        <p class="text-gray-600 mb-6">
+            Lo sentimos, la página que estás buscando no existe o ha sido eliminada.
+        </p>
+
+        <!-- Botón -->
+        <a href="<?php echo e(route('dashboard')); ?>"
+           class="inline-block px-6 py-2 bg-red-700 text-white font-semibold rounded-lg shadow-md hover:bg-red-800 transition">
+            Volver al inicio
+        </a>
     </div>
- <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
-<?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
-<?php unset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
-<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
-<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
-<?php endif; ?>
+</body>
+</html>
 <?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/errors/404.blade.php ENDPATH**/ ?>

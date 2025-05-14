@@ -10,6 +10,12 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PartidaTipoController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
+
+Route::fallback(function () {
+    abort(404);
+});
+
+
 // Ruta raíz redirecciona a login
 Route::get('/', function () {
     return redirect()->route('login');

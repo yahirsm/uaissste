@@ -36,10 +36,12 @@
 
             <!-- Formulario Agregar Plaza -->
             <div id="formAgregar" class="hidden mb-6">
-                <form method="POST" action="<?php echo e(route('plazas.store')); ?>" class="bg-gray-100 p-4 rounded-lg shadow-md dark:bg-gray-700">
+                <form method="POST" action="<?php echo e(route('plazas.store')); ?>"
+                    class="bg-gray-100 p-4 rounded-lg shadow-md dark:bg-gray-700">
                     <?php echo csrf_field(); ?>
                     <div class="mb-4">
-                        <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Nombre de la Plaza</label>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Nombre
+                            de la Plaza</label>
                         <input type="text" name="nombre" id="nombre" value="<?php echo e(old('nombre')); ?>"
                             class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-700 focus:border-red-700 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
                         <?php $__errorArgs = ['nombre'];
@@ -75,7 +77,8 @@ unset($__errorArgs, $__bag); ?>
                     </thead>
                     <tbody>
                         <?php $__empty_1 = true; $__currentLoopData = $plazas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $plaza): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-300 dark:border-gray-700">
+                            <tr
+                                class="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-300 dark:border-gray-700">
                                 <td class="px-4 py-3"><?php echo e($plaza->nombre); ?></td>
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex justify-center gap-2">
@@ -87,7 +90,8 @@ unset($__errorArgs, $__bag); ?>
                                         </button>
 
                                         <!-- Eliminar -->
-                                        <form action="<?php echo e(route('plazas.destroy', $plaza->id)); ?>" method="POST" onsubmit="return confirmarEliminacion('<?php echo e($plaza->nombre); ?>');">
+                                        <form action="<?php echo e(route('plazas.destroy', $plaza->id)); ?>" method="POST"
+                                            data-nombre="<?php echo e($plaza->nombre); ?>" class="form-eliminar-plaza">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
                                             <button type="submit"
@@ -125,11 +129,14 @@ unset($__errorArgs, $__bag); ?>
                 <?php echo csrf_field(); ?>
                 <?php echo method_field('PUT'); ?>
                 <div class="mb-4">
-                    <label for="edit_nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
-                    <input type="text" name="nombre" id="edit_nombre" class="mt-1 block w-full rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <label for="edit_nombre"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
+                    <input type="text" name="nombre" id="edit_nombre"
+                        class="mt-1 block w-full rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
                 <div class="flex justify-end gap-2">
-                    <button type="button" onclick="cerrarModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
+                    <button type="button" onclick="cerrarModal()"
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
                         Cancelar
                     </button>
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
@@ -167,4 +174,32 @@ unset($__errorArgs, $__bag); ?>
 <?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
 <?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
 <?php endif; ?>
+<script>
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const formulariosPlaza = document.querySelectorAll('.form-eliminar-plaza');
+
+        formulariosPlaza.forEach(form => {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const nombre = this.dataset.nombre;
+                const confirmado = await confirmarEliminacionSweet(`la plaza "${nombre}"`);
+
+                if (confirmado) this.submit();
+            });
+        });
+    });
+    function confirmarEliminacionSweet(nombreEntidad = 'este elemento') {
+        return Swal.fire({
+            title: '¿Eliminar?',
+            text: `¿Estás seguro de que deseas eliminar ${nombreEntidad}? Esta acción no se puede deshacer.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(result => result.isConfirmed);
+    }
+</script>
 <?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/plazas/index.blade.php ENDPATH**/ ?>

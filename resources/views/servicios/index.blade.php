@@ -64,7 +64,8 @@
                                             <span>Editar</span>
                                         </button>
 
-                                        <form action="{{ route('servicios.destroy', $servicio->id) }}" method="POST" onsubmit="return confirmarEliminacion('{{ $servicio->nombre }}');">
+<form action="{{ route('servicios.destroy', $servicio->id) }}" method="POST"
+    data-nombre="{{ $servicio->nombre }}" class="form-eliminar-servicio">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -132,3 +133,31 @@
     </script>
 
 </x-app-layout>
+<script>
+    // Confirmación para eliminación de servicios con SweetAlert2
+    document.addEventListener('DOMContentLoaded', () => {
+        const formulariosServicio = document.querySelectorAll('.form-eliminar-servicio');
+
+        formulariosServicio.forEach(form => {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const nombre = this.dataset.nombre;
+                const confirmado = await confirmarEliminacionSweet(`el servicio "${nombre}"`);
+                if (confirmado) this.submit();
+            });
+        });
+    });
+
+     function confirmarEliminacionSweet(nombreEntidad = 'este elemento') {
+        return Swal.fire({
+            title: '¿Eliminar?',
+            text: `¿Estás seguro de que deseas eliminar ${nombreEntidad}? Esta acción no se puede deshacer.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(result => result.isConfirmed);
+    }
+</script>

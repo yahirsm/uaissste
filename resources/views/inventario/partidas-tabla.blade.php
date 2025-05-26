@@ -20,7 +20,8 @@
                             <span>Editar</span>
                         </button>
                         <form action="{{ route('partidas.destroy', $partida->id) }}" method="POST"
-                            onsubmit="return confirm('¿Eliminar partida?');">
+    data-nombre="{{ $partida->nombre }}" class="form-eliminar-partida">
+
                             @csrf
                             @method('DELETE')
                             <button type="submit"
@@ -64,3 +65,32 @@
         </form>
     </div>
 </div>
+<script>
+    // Reutilizable para cualquier entidad
+    function confirmarEliminacionSweet(nombreEntidad = 'este elemento') {
+        return Swal.fire({
+            title: '¿Eliminar?',
+            text: `¿Estás seguro de que deseas eliminar ${nombreEntidad}? Esta acción no se puede deshacer.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(result => result.isConfirmed);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const formularios = document.querySelectorAll('.form-eliminar-partida');
+
+        formularios.forEach(form => {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const nombre = this.dataset.nombre;
+                const confirmado = await confirmarEliminacionSweet(`la partida "${nombre}"`);
+
+                if (confirmado) this.submit();
+            });
+        });
+    });
+</script>

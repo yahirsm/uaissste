@@ -40,7 +40,7 @@ class EmpleadoController extends Controller
             'rfc.regex' => 'El RFC debe tener exactamente 13 caracteres (mayúsculas y números).',
             'rfc.unique' => 'Ya existe un empleado con este RFC.',
         ]);
-        
+
 
         DB::transaction(function () use ($request) {
             $nombre = trim($request->nombre);
@@ -93,31 +93,45 @@ class EmpleadoController extends Controller
     public function destroy($id)
     {
         $empleado = Empleado::with('user')->findOrFail($id);
-    
+
         DB::transaction(function () use ($empleado) {
             // Eliminar historial de servicios
             EmpleadoServicio::where('empleado_id', $empleado->id)->delete();
-    
+
             // Eliminar usuario si existe
             if ($empleado->user_id) {
                 User::where('id', $empleado->user_id)->delete();
             }
-    
+
             // Eliminar el empleado
             $empleado->delete();
         });
-    
+
         return redirect()->route('usuarios.index')->with('success', 'Empleado y usuario eliminados correctamente.');
     }
-    
 
-    public function index()
-    {
-        $empleados = Empleado::paginate(10);
-        $usuarios = Empleado::with('servicioActual')->get();
-        // Puedes cambiar 10 por la cantidad deseada de registros por página
-        return view('usuarios.usuarios', compact('empleados'));
+
+   public function index(Request $request)
+{
+    $query = Empleado::with(['servicioActual', 'plaza']);
+
+    if ($request->filled('buscar')) {
+        $busqueda = $request->input('buscar');
+
+        // Validar que solo se acepten 6 números
+        if (!preg_match('/^\d{6}$/', $busqueda)) {
+            return back()->with('error', 'El número de empleado debe contener exactamente 6 dígitos.');
+        }
+
+        $query->where('numero_empleado', $busqueda);
     }
+
+    $empleados = $query->paginate(10);
+
+    return view('usuarios.usuarios', compact('empleados'));
+}
+
+
     public function show($id)
     {
         $empleado = Empleado::findOrFail($id); // Busca el empleado o lanza un error 404 si no existe

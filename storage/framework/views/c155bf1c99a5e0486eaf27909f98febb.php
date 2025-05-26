@@ -18,11 +18,27 @@
                     <i class="fas fa-users mr-2"></i> Lista de Usuarios
                 </h2>
                 <!-- Botón para agregar un nuevo usuario -->
-                <a href="<?php echo e(route('usuarios.create')); ?>" class="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded flex items-center gap-2 transition">
+                <a href="<?php echo e(route('usuarios.create')); ?>"
+                    class="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded flex items-center gap-2 transition">
                     <i class="fas fa-user-plus"></i>
                     <span>Agregar Usuario</span>
                 </a>
             </div>
+            <!-- Buscador por número de empleado -->
+            <form method="GET" action="<?php echo e(route('usuarios.index')); ?>" class="mb-4">
+                <div class="flex items-center gap-2">
+                    <input type="text" name="buscar" placeholder="Buscar por número de empleado"
+                        value="<?php echo e(request('buscar')); ?>" maxlength="6" pattern="\d{6}"
+                        title="Ingresa un número de empleado de 6 dígitos"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        class="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-700 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                        required>
+                    <button type="submit" class="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-search mr-1"></i> Buscar
+                    </button>
+                </div>
+            </form>
+
 
             <?php if(session('success')): ?>
                 <div class="bg-green-500 text-white p-2 mb-4 rounded shadow-md dark:bg-green-700">
@@ -30,6 +46,20 @@
 
                 </div>
             <?php endif; ?>
+
+            <?php if(session('error')): ?>
+                <div class="bg-red-500 text-white p-2 mb-4 rounded shadow-md dark:bg-red-700">
+                    <?php echo e(session('error')); ?>
+
+                </div>
+            <?php endif; ?>
+
+            <?php if($empleados->isEmpty()): ?>
+                <div class="bg-yellow-100 text-yellow-800 p-4 rounded mb-4">
+                    No se encontraron empleados con ese número.
+                </div>
+            <?php endif; ?>
+
 
             <!-- Tabla de empleados -->
             <div class="overflow-x-auto">
@@ -48,7 +78,8 @@
                     </thead>
                     <tbody>
                         <?php $__currentLoopData = $empleados; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $empleado): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-300 dark:border-gray-700">
+                            <tr
+                                class="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-300 dark:border-gray-700">
                                 <td class="px-4 py-3 truncate"><?php echo e($empleado->nombre); ?></td>
                                 <td class="px-4 py-3 truncate"><?php echo e($empleado->primer_apellido); ?></td>
                                 <td class="px-4 py-3 truncate"><?php echo e($empleado->segundo_apellido); ?></td>
@@ -80,7 +111,8 @@
 
                                         <!-- Eliminar -->
                                         <form action="<?php echo e(route('usuarios.destroy', $empleado->id)); ?>" method="POST"
-                                            onsubmit="return confirmarEliminacion('<?php echo e($empleado->nombre); ?>');" class="inline">
+                                            onsubmit="return confirmarEliminacion('<?php echo e($empleado->nombre); ?>');"
+                                            class="inline">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
                                             <button type="submit"
@@ -99,18 +131,57 @@
 
             <!-- Paginación -->
             <div class="mt-4">
-                <?php echo e($empleados->links()); ?>
+                <?php echo e($empleados->appends(request()->query())->links()); ?>
 
             </div>
         </div>
     </div>
 
     <!-- Script para confirmación personalizada -->
+
     <script>
+        const input = document.querySelector('input[name="buscar"]');
+        input.addEventListener('input', function() {
+            if (this.value.trim() === '') {
+                window.location.href = "<?php echo e(route('usuarios.index')); ?>";
+            }
+        });
+
         function confirmarEliminacion(nombre) {
-            return confirm(`¿Estás seguro de que deseas eliminar a ${nombre}?`);
+            return new Promise((resolve) => {
+                Swal.fire({
+                    title: '¿Eliminar usuario?',
+                    text: `¿Estás seguro de que deseas eliminar a ${nombre}? Esta acción no se puede deshacer.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    resolve(result.isConfirmed);
+                });
+            });
         }
+
+        // Interceptar formularios con onsubmit para usar SweetAlert2
+        document.addEventListener('DOMContentLoaded', () => {
+            const forms = document.querySelectorAll('form[onsubmit^="return confirmarEliminacion"]');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+
+                    const nombre = this.getAttribute('onsubmit').match(/'([^']+)'/)[1];
+                    const confirmado = await confirmarEliminacion(nombre);
+
+                    if (confirmado) this.submit();
+                });
+            });
+        });
     </script>
+
+
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

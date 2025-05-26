@@ -18,7 +18,8 @@
                             <span>Editar</span>
                         </button>
                         <form action="<?php echo e(route('tipos.destroy', $tipo->tipo_insumo_id)); ?>" method="POST"
-                            onsubmit="return confirm('¿Eliminar tipo de insumo?');">
+                            data-nombre="<?php echo e($tipo->nombre); ?>" class="form-eliminar-tipo-insumo">
+
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>
                             <button type="submit"
@@ -42,7 +43,8 @@
             <?php echo csrf_field(); ?>
             <?php echo method_field('PUT'); ?>
             <div class="mb-4">
-                <label for="edit_nombre_tipo" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
+                <label for="edit_nombre_tipo"
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
                 <input type="text" name="nombre" id="edit_nombre_tipo"
                     class="mt-1 block w-full border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     required pattern="[A-ZÁÉÍÓÚÑ\s]{3,100}" style="text-transform: uppercase">
@@ -50,10 +52,26 @@
             <div class="flex justify-end gap-2">
                 <button type="button" onclick="cerrarModalTipo()"
                     class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Cancelar</button>
-                <button type="submit"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Guardar cambios</button>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Guardar
+                    cambios</button>
             </div>
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const formulariosTipo = document.querySelectorAll('.form-eliminar-tipo-insumo');
+
+        formulariosTipo.forEach(form => {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const nombre = this.dataset.nombre;
+                const confirmado = await confirmarEliminacionSweet(
+                    `el tipo de insumo "${nombre}"`);
+
+                if (confirmado) this.submit();
+            });
+        });
+    });
+</script>
 <?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/inventario/tipos-tabla.blade.php ENDPATH**/ ?>

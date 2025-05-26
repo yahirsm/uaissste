@@ -11,7 +11,9 @@
             const data = new FormData();
             data.append('_token', '{{ csrf_token() }}');
             navigator.sendBeacon('/logout', data);
-            setTimeout(() => { isClosing = false; }, 100);
+            setTimeout(() => {
+                isClosing = false;
+            }, 100);
         }
     });
     document.addEventListener('visibilitychange', () => {
@@ -20,6 +22,7 @@
         }
     });
 </script> -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <head>
     <meta charset="utf-8">

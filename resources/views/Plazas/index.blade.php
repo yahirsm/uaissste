@@ -26,10 +26,12 @@
 
             <!-- Formulario Agregar Plaza -->
             <div id="formAgregar" class="hidden mb-6">
-                <form method="POST" action="{{ route('plazas.store') }}" class="bg-gray-100 p-4 rounded-lg shadow-md dark:bg-gray-700">
+                <form method="POST" action="{{ route('plazas.store') }}"
+                    class="bg-gray-100 p-4 rounded-lg shadow-md dark:bg-gray-700">
                     @csrf
                     <div class="mb-4">
-                        <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Nombre de la Plaza</label>
+                        <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Nombre
+                            de la Plaza</label>
                         <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}"
                             class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-700 focus:border-red-700 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
                         @error('nombre')
@@ -58,7 +60,8 @@
                     </thead>
                     <tbody>
                         @forelse ($plazas as $plaza)
-                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-300 dark:border-gray-700">
+                            <tr
+                                class="hover:bg-gray-100 dark:hover:bg-gray-700 border-b border-gray-300 dark:border-gray-700">
                                 <td class="px-4 py-3">{{ $plaza->nombre }}</td>
                                 <td class="px-4 py-3 text-center">
                                     <div class="flex justify-center gap-2">
@@ -70,7 +73,8 @@
                                         </button>
 
                                         <!-- Eliminar -->
-                                        <form action="{{ route('plazas.destroy', $plaza->id) }}" method="POST" onsubmit="return confirmarEliminacion('{{ $plaza->nombre }}');">
+                                        <form action="{{ route('plazas.destroy', $plaza->id) }}" method="POST"
+                                            data-nombre="{{ $plaza->nombre }}" class="form-eliminar-plaza">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
@@ -107,11 +111,14 @@
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
-                    <label for="edit_nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
-                    <input type="text" name="nombre" id="edit_nombre" class="mt-1 block w-full rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    <label for="edit_nombre"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
+                    <input type="text" name="nombre" id="edit_nombre"
+                        class="mt-1 block w-full rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 </div>
                 <div class="flex justify-end gap-2">
-                    <button type="button" onclick="cerrarModal()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
+                    <button type="button" onclick="cerrarModal()"
+                        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
                         Cancelar
                     </button>
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
@@ -140,3 +147,31 @@
     </script>
 
 </x-app-layout>
+<script>
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const formulariosPlaza = document.querySelectorAll('.form-eliminar-plaza');
+
+        formulariosPlaza.forEach(form => {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const nombre = this.dataset.nombre;
+                const confirmado = await confirmarEliminacionSweet(`la plaza "${nombre}"`);
+
+                if (confirmado) this.submit();
+            });
+        });
+    });
+    function confirmarEliminacionSweet(nombreEntidad = 'este elemento') {
+        return Swal.fire({
+            title: '¿Eliminar?',
+            text: `¿Estás seguro de que deseas eliminar ${nombreEntidad}? Esta acción no se puede deshacer.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(result => result.isConfirmed);
+    }
+</script>

@@ -34,32 +34,34 @@
                 <div>
                     <label for="numero_empleado">Número de Empleado</label>
                     <input type="text" name="numero_empleado" id="numero_empleado" maxlength="6" required
-                        class="w-full p-2 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition"
-                    >
-                    <small id="empleadoExiste" class="text-red-600 hidden">Ya existe un empleado con este número.</small>
+                        placeholder="Ej. 123456"
+                        class="w-full p-2 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition">
+                    <small id="empleadoExiste" class="text-red-600 hidden">Ya existe un empleado con este
+                        número.</small>
                 </div>
 
                 <div>
                     <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" required
+                    <input type="text" name="nombre" id="nombre" required placeholder="Ej. Juan Carlos"
                         class="w-full p-2 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition">
                 </div>
 
                 <div>
                     <label for="primer_apellido">Primer Apellido</label>
-                    <input type="text" name="primer_apellido" id="primer_apellido" required
+                    <input type="text" name="primer_apellido" id="primer_apellido" required placeholder="Ej. Perez"
                         class="w-full p-2 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition">
                 </div>
 
                 <div>
                     <label for="segundo_apellido">Segundo Apellido</label>
-                    <input type="text" name="segundo_apellido" id="segundo_apellido"
+                    <input type="text" name="segundo_apellido" id="segundo_apellido" placeholder="Ej. López"
                         class="w-full p-2 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition">
                 </div>
 
                 <div>
                     <label for="rfc">RFC</label>
                     <input type="text" name="rfc" id="rfc" maxlength="13" required
+                        placeholder="Ej. ABCD901212XXX"
                         class="w-full p-2 border rounded uppercase bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition">
                 </div>
 
@@ -73,21 +75,25 @@
                     <label for="plaza_id">Tipo de Plaza</label>
                     <select name="plaza_id" id="plaza_id" required
                         class="w-full p-2 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition">
+                        <option value="" disabled selected>Seleccione una plaza</option>
                         <?php $__currentLoopData = $plazas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $plaza): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($plaza->id); ?>"><?php echo e($plaza->nombre); ?></option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>
 
+
                 <div>
                     <label for="servicio_id">Servicio Actual</label>
                     <select name="servicio_id" id="servicio_id" required
                         class="w-full p-2 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition">
+                        <option value="" disabled selected>Seleccione un servicio</option>
                         <?php $__currentLoopData = $servicios; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $servicio): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($servicio->id); ?>"><?php echo e($servicio->nombre); ?></option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>
+
 
                 <div>
                     <label for="username">Usuario Generado</label>
@@ -127,7 +133,7 @@
         const btnGuardar = document.getElementById('guardarBtn');
         const alertaEmpleado = document.getElementById('empleadoExiste');
 
-        inputNumero.addEventListener('blur', function () {
+        inputNumero.addEventListener('blur', function() {
             const num = this.value;
             fetch(`/verificar-empleado/${num}`)
                 .then(res => res.json())
@@ -178,17 +184,36 @@
         });
 
         function confirmarCancelacion() {
-            if (confirm('¿Estás seguro de que deseas cancelar el registro? Se perderán los datos no guardados.')) {
-                history.back(); // o window.location.href = "<?php echo e(route('usuarios.index')); ?>";
-            }
+            Swal.fire({
+                title: '¿Cancelar registro?',
+                text: 'Se perderán los datos no guardados.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, cancelar',
+                cancelButtonText: 'No, continuar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    history.back(); // o window.location.href = "<?php echo e(route('usuarios.index')); ?>";
+                }
+            });
         }
     </script>
 
     <style>
         @keyframes fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .animate-fade-in {
             animation: fade-in 0.5s ease-out;
         }

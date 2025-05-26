@@ -86,4 +86,12 @@
     </div>
 
     @stack('modals')
+    <script>
+    const input = document.querySelector('input[name="search"]');
+    input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            window.location.href = "{{ route('inventario.index') }}";
+        }
+    });
+</script>
 </x-app-layout>

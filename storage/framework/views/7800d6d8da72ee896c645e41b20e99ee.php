@@ -98,6 +98,14 @@
     </div>
 
     <?php echo $__env->yieldPushContent('modals'); ?>
+    <script>
+    const input = document.querySelector('input[name="search"]');
+    input.addEventListener('input', function () {
+        if (this.value.trim() === '') {
+            window.location.href = "<?php echo e(route('inventario.index')); ?>";
+        }
+    });
+</script>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

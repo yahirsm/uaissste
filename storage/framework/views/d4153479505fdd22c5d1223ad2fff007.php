@@ -81,7 +81,8 @@ unset($__errorArgs, $__bag); ?>
                                             <span>Editar</span>
                                         </button>
 
-                                        <form action="<?php echo e(route('servicios.destroy', $servicio->id)); ?>" method="POST" onsubmit="return confirmarEliminacion('<?php echo e($servicio->nombre); ?>');">
+<form action="<?php echo e(route('servicios.destroy', $servicio->id)); ?>" method="POST"
+    data-nombre="<?php echo e($servicio->nombre); ?>" class="form-eliminar-servicio">
                                             <?php echo csrf_field(); ?>
                                             <?php echo method_field('DELETE'); ?>
                                             <button type="submit"
@@ -159,4 +160,32 @@ unset($__errorArgs, $__bag); ?>
 <?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
 <?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
 <?php endif; ?>
+<script>
+    // Confirmación para eliminación de servicios con SweetAlert2
+    document.addEventListener('DOMContentLoaded', () => {
+        const formulariosServicio = document.querySelectorAll('.form-eliminar-servicio');
+
+        formulariosServicio.forEach(form => {
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const nombre = this.dataset.nombre;
+                const confirmado = await confirmarEliminacionSweet(`el servicio "${nombre}"`);
+                if (confirmado) this.submit();
+            });
+        });
+    });
+
+     function confirmarEliminacionSweet(nombreEntidad = 'este elemento') {
+        return Swal.fire({
+            title: '¿Eliminar?',
+            text: `¿Estás seguro de que deseas eliminar ${nombreEntidad}? Esta acción no se puede deshacer.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(result => result.isConfirmed);
+    }
+</script>
 <?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/servicios/index.blade.php ENDPATH**/ ?>

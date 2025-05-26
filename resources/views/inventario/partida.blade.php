@@ -101,5 +101,5 @@
             document.getElementById('modalEditarTipo').classList.add('hidden');
         }
     </script>
-    
+     
 </x-app-layout>

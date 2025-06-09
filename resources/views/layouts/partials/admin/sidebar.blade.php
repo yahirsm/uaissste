@@ -56,6 +56,12 @@
                     'route' => route('inventario.partida'),
                     'active' => request()->routeIs('inventario.partida'),
                 ],
+                [
+                    'name' => 'Movimientos',
+                    'icon' => 'fa-solid fa-exchange-alt',
+                    'route' => route('inventario.movimientos.index'),
+                    'active' => request()->routeIs('inventario.movimientos.*'),
+                ],
             ],
         ],
         [
@@ -108,12 +114,13 @@
                             onclick="toggleSubmenu(this)">
                             <div class="flex items-center">
                                 <span class="w-5 h-5 flex justify-center items-center">
-                                    <i class="{{ $item['icon'] }} {{ $item['active'] ? 'text-white' : 'text-gray-800' }}"></i>
+                                    <i
+                                        class="{{ $item['icon'] }} {{ $item['active'] ? 'text-white' : 'text-gray-800' }}"></i>
                                 </span>
                                 <span class="ms-3">{{ $item['name'] }}</span>
                             </div>
-                            <svg class="w-3 h-3 transition-transform duration-200 {{ $item['active'] ? 'rotate-180' : '' }}" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 10 6">
+                            <svg class="w-3 h-3 transition-transform duration-200 {{ $item['active'] ? 'rotate-180' : '' }}"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 1 4 4 4-4" />
                             </svg>
@@ -137,7 +144,8 @@
                             class="flex items-center p-2 rounded-lg transition duration-300 
                             {{ $item['active'] ? 'bg-[#7A0019] text-white' : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                             <span class="w-5 h-5 flex justify-center items-center">
-                                <i class="{{ $item['icon'] }} {{ $item['active'] ? 'text-white' : 'text-gray-800' }}"></i>
+                                <i
+                                    class="{{ $item['icon'] }} {{ $item['active'] ? 'text-white' : 'text-gray-800' }}"></i>
                             </span>
                             <span class="ms-3">{{ $item['name'] }}</span>
                         </a>

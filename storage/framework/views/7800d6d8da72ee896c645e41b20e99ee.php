@@ -24,7 +24,7 @@
             <!-- Campo de búsqueda y botón de agregar -->
             <div class="flex justify-between items-center mb-4">
                 <form method="GET" action="<?php echo e(route('inventario.index')); ?>" class="flex space-x-2">
-                    <input type="text" name="search" placeholder="Buscar por clave o descripción" 
+                    <input type="text" name="search" placeholder="Buscar por clave o descripción"
                         class="border border-gray-300 rounded-lg px-4 py-2 focus:border-red-700 focus:ring focus:ring-red-300 w-64"
                         value="<?php echo e(request('search')); ?>">
                     <button type="submit" class="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800">
@@ -45,6 +45,8 @@
                         <th class="px-6 py-3">Descripción</th>
                         <th class="px-6 py-3">Tipo de Insumo</th>
                         <th class="px-6 py-3">Partida</th>
+                        <th class="px-6 py-3">Stock</th>
+
                         <th class="px-6 py-3 text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -67,7 +69,8 @@
                                     <?php else: ?>
                                         <span class="text-red-600">Sin tipo</span>
                                     <?php endif; ?>
-                                </td>                                <td class="px-6 py-3">
+                                </td>
+                                <td class="px-6 py-3">
                                     <?php if($material->partida): ?>
                                         <?php echo e($material->partida->nombre); ?>
 
@@ -75,6 +78,8 @@
                                         <span class="text-red-600">Sin partida</span>
                                     <?php endif; ?>
                                 </td>
+                                <td class="px-6 py-3"><?php echo e($material->stock_actual); ?></td>
+
                                 <td class="px-6 py-3 flex justify-center space-x-2">
                                     <button class="bg-yellow-600 text-white py-1 px-3 rounded hover:bg-yellow-700">
                                         <i class="fas fa-pencil-alt"></i> Modificar
@@ -99,13 +104,13 @@
 
     <?php echo $__env->yieldPushContent('modals'); ?>
     <script>
-    const input = document.querySelector('input[name="search"]');
-    input.addEventListener('input', function () {
-        if (this.value.trim() === '') {
-            window.location.href = "<?php echo e(route('inventario.index')); ?>";
-        }
-    });
-</script>
+        const input = document.querySelector('input[name="search"]');
+        input.addEventListener('input', function() {
+            if (this.value.trim() === '') {
+                window.location.href = "<?php echo e(route('inventario.index')); ?>";
+            }
+        });
+    </script>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

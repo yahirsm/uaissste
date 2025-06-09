@@ -15,7 +15,7 @@
             <!-- Campo de búsqueda y botón de agregar -->
             <div class="flex justify-between items-center mb-4">
                 <form method="GET" action="{{ route('inventario.index') }}" class="flex space-x-2">
-                    <input type="text" name="search" placeholder="Buscar por clave o descripción" 
+                    <input type="text" name="search" placeholder="Buscar por clave o descripción"
                         class="border border-gray-300 rounded-lg px-4 py-2 focus:border-red-700 focus:ring focus:ring-red-300 w-64"
                         value="{{ request('search') }}">
                     <button type="submit" class="bg-red-700 text-white px-4 py-2 rounded-lg hover:bg-red-800">
@@ -36,6 +36,8 @@
                         <th class="px-6 py-3">Descripción</th>
                         <th class="px-6 py-3">Tipo de Insumo</th>
                         <th class="px-6 py-3">Partida</th>
+                        <th class="px-6 py-3">Stock</th>
+
                         <th class="px-6 py-3 text-center">Acciones</th>
                     </tr>
                 </thead>
@@ -57,13 +59,16 @@
                                     @else
                                         <span class="text-red-600">Sin tipo</span>
                                     @endif
-                                </td>                                <td class="px-6 py-3">
+                                </td>
+                                <td class="px-6 py-3">
                                     @if ($material->partida)
                                         {{ $material->partida->nombre }}
                                     @else
                                         <span class="text-red-600">Sin partida</span>
                                     @endif
                                 </td>
+                                <td class="px-6 py-3">{{ $material->stock_actual }}</td>
+
                                 <td class="px-6 py-3 flex justify-center space-x-2">
                                     <button class="bg-yellow-600 text-white py-1 px-3 rounded hover:bg-yellow-700">
                                         <i class="fas fa-pencil-alt"></i> Modificar
@@ -87,11 +92,11 @@
 
     @stack('modals')
     <script>
-    const input = document.querySelector('input[name="search"]');
-    input.addEventListener('input', function () {
-        if (this.value.trim() === '') {
-            window.location.href = "{{ route('inventario.index') }}";
-        }
-    });
-</script>
+        const input = document.querySelector('input[name="search"]');
+        input.addEventListener('input', function() {
+            if (this.value.trim() === '') {
+                window.location.href = "{{ route('inventario.index') }}";
+            }
+        });
+    </script>
 </x-app-layout>

@@ -9,7 +9,7 @@ use App\Http\Controllers\PlazaController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PartidaTipoController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-
+use App\Http\Controllers\InventarioMovimientoController;
 
 Route::fallback(function () {
     abort(404);
@@ -76,6 +76,14 @@ Route::middleware([
     // Reportes
     Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
     Route::get('/reportes/inventario/pdf', [ReporteController::class, 'generarInventarioPDF'])->name('reportes.inventario.pdf');
+    Route::get('reportes/inventario/stock-bajo', [ReporteController::class, 'generarBajoStockPDF'])
+        ->name('reportes.stockBajo.pdf');
+
+    // Reporte de caducidad (con rango de fechas)
+    Route::get('reportes/inventario/caducidad', [ReporteController::class, 'generarCaducidadPDF'])
+        ->name('reportes.caducidad.pdf');
+    Route::get('reportes/movimientos-mes', [ReporteController::class, 'generarMovimientosMesPDF'])
+        ->name('reportes.movimientosMes.pdf');
 
     // Partidas y Tipos de Insumo
     Route::get('/inventario/partidas-tipos', [PartidaTipoController::class, 'index'])->name('inventario.partida');
@@ -89,4 +97,11 @@ Route::middleware([
     Route::post('/tipos-insumo', [PartidaTipoController::class, 'storeTipo'])->name('tipos.store');
     Route::put('/tipos-insumo/{id}', [PartidaTipoController::class, 'updateTipo'])->name('tipos.update');
     Route::delete('/tipos-insumo/{id}', [PartidaTipoController::class, 'destroyTipo'])->name('tipos.destroy');
+
+    Route::resource('inventario/movimientos', InventarioMovimientoController::class)
+        ->only(['index', 'store'])
+        ->names([
+            'index' => 'inventario.movimientos.index',
+            'store' => 'inventario.movimientos.store',
+        ]);
 });

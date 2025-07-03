@@ -10,6 +10,8 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PartidaTipoController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\InventarioMovimientoController;
+use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\PedidoController;
 
 Route::fallback(function () {
     abort(404);
@@ -62,7 +64,22 @@ Route::middleware([
     });
 
     // Inventario
-    Route::get('/inventario', [InventarioController::class, 'index'])->name('inventario.index');
+
+    // en routes/web.php
+    Route::resource('inventario', InventarioController::class)
+        ->except(['show'])
+        ->parameters([
+            'inventario' => 'material'
+        ])
+        ->names([
+            'index'   => 'inventario.index',
+            'create'  => 'inventario.create',
+            'store'   => 'inventario.store',
+            'edit'    => 'inventario.edit',
+            'update'  => 'inventario.update',
+            'destroy' => 'inventario.destroy',
+        ]);
+
 
     // Usuarios (empleados)
     Route::resource('usuarios', EmpleadoController::class);
@@ -104,4 +121,17 @@ Route::middleware([
             'index' => 'inventario.movimientos.index',
             'store' => 'inventario.movimientos.store',
         ]);
+    Route::prefix('distribucion')->name('distribucion.')->group(function () {
+        // Solicitud
+        Route::get('solicitud',    [SolicitudController::class, 'index'])->name('solicitud.index');
+        Route::post('solicitud',   [SolicitudController::class, 'store'])->name('solicitud.store');
+        Route::get('solicitud/{solicitud}', [SolicitudController::class, 'show'])->name('solicitud.show');
+
+        // Pedidos (todas las solicitudes creadas)
+        Route::get('pedidos',      [PedidoController::class, 'index'])->name('pedidos.index');
+        Route::get('pedidos/{solicitud}/pdf', [PedidoController::class, 'pdf'])->name('pedidos.pdf');
+        Route::get('pedidos/{solicitud}',     [PedidoController::class, 'show'])->name('pedidos.show');
+        Route::post('pedidos/{solicitud}/autorizar', [PedidoController::class, 'autorizar'])
+         ->name('pedidos.autorizar');
+    });
 });

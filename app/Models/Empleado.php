@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;     
+use App\Models\Servicio;  
+use App\Models\Plaza;     // ← Importa Plaza
 
 class Empleado extends Model
 {
     use HasFactory;
 
-    protected $table = 'empleados'; // Define el nombre de la tabla explícitamente
+    protected $table = 'empleados';
 
     protected $fillable = [
         'nombre',
@@ -19,36 +22,48 @@ class Empleado extends Model
         'rfc',
         'servicio_actual_id',
         'plaza_id',
-        'user_id'
+        'user_id',
     ];
 
-    // Relación con Servicio (actual)
+    /**
+     * Relación con el usuario (clave foránea user_id)
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Relación con el Servicio actual (clave foránea servicio_actual_id)
+     */
     public function servicioActual()
     {
         return $this->belongsTo(Servicio::class, 'servicio_actual_id');
     }
 
-    // Relación con Plaza
+    /**
+     * Relación con Plaza
+     */
     public function plaza()
     {
-        return $this->belongsTo(Plaza::class);
+        return $this->belongsTo(Plaza::class, 'plaza_id');
     }
 
-    // Relación muchos a muchos con Servicios (historial)
+    /**
+     * Historial de servicios (many-to-many)
+     */
     public function servicios()
     {
         return $this->belongsToMany(Servicio::class, 'empleado_servicio')
-            ->withTimestamps()
-            ->withPivot('fecha_inicio', 'fecha_fin');
+                    ->withPivot('fecha_inicio', 'fecha_fin')
+                    ->withTimestamps();
     }
+
+    /**
+     * Sólo los servicios ya finalizados
+     */
     public function serviciosAnteriores()
     {
-        return $this->belongsToMany(Servicio::class, 'empleado_servicio')
-            ->withPivot('fecha_inicio', 'fecha_fin')
-            ->whereNotNull('fecha_fin'); // Filtra solo servicios anteriores
-    }
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->servicios()->whereNotNull('fecha_fin');
     }
 }

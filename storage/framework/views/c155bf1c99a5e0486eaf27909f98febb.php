@@ -137,7 +137,6 @@
         </div>
     </div>
 
-    <!-- Script para confirmación personalizada -->
 
     <script>
         const input = document.querySelector('input[name="buscar"]');

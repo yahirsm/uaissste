@@ -51,8 +51,9 @@
                                 <p class="text-sm font-semibold text-gray-900 dark:text-white mt-2">
                                     {{ auth()->user()->name }}
                                 </p>
-                                <p class="text-xs font-medium text-gray-500 dark:text-gray-300">
-                                    {{ auth()->user()->email }}
+                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400">
+                                  Rol :  {{ auth()->user()->getRoleNames()->first() ?? 'Sin rol asignado' }}
+
                                 </p>
                             </div>
                             <div class="flex justify-around px-4 py-3">

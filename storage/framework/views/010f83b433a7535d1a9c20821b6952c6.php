@@ -77,11 +77,28 @@
                         <label for="rfc" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                             RFC
                         </label>
-                        <input type="text" id="rfc" name="rfc" value="<?php echo e(old('rfc', $empleado->rfc)); ?>" required
-                            pattern="[A-ZÑ&]{3,4}[0-9]{6}[A-Z0-9]{3}"
+                        <input type="text" id="rfc" name="rfc" value="<?php echo e(old('rfc', $empleado->rfc)); ?>"
+                            required pattern="[A-ZÑ&]{3,4}[0-9]{6}[A-Z0-9]{3}"
                             title="Formato RFC inválido (Ejemplo: ABCD123456XYZ)"
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-600 focus:border-red-600 dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
                     </div>
+                  <div class="mt-4">
+  <label for="rol" class="block text-sm font-medium text-gray-700">Rol</label>
+  <select id="rol" name="rol" class="...">
+    <option value="Administrador"
+      <?php echo e(old('rol', $empleado->user->roles->pluck('name')->first() ?? '') == 'Administrador' ? 'selected' : ''); ?>>
+      Administrador
+    </option>
+    <option value="Jefe Abasto"
+      <?php echo e(old('rol', $empleado->user->roles->pluck('name')->first() ?? '') == 'Jefe Abasto' ? 'selected' : ''); ?>>
+      Jefe Abasto
+    </option>
+    <option value="Solicitante"
+      <?php echo e(old('rol', $empleado->user->roles->pluck('name')->first() ?? '') == 'Solicitante' ? 'selected' : ''); ?>>
+      Solicitante
+    </option>
+  </select>
+</div>
 
                     <!-- Plaza -->
                     <div>

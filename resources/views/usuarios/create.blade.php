@@ -61,6 +61,25 @@
                     <input type="email" name="email" id="email" required
                         class="w-full p-2 border rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-red-600 transition">
                 </div>
+                <div class="mt-4">
+                    <label for="rol" class="block text-sm font-medium text-gray-700">Rol</label>
+                    <select id="rol" name="rol"
+                        class="mt-1 block w-full rounded border-gray-300 focus:border-red-700 focus:ring focus:ring-red-200">
+                        <option value="Administrador"
+                            {{ old('rol', $user->roles->pluck('name')->first() ?? '') == 'Administrador' ? 'selected' : '' }}>
+                            Administrador
+                        </option>
+                        <option value="Jefe Abasto"
+                            {{ old('rol', $user->roles->pluck('name')->first() ?? '') == 'Jefe Abasto' ? 'selected' : '' }}>
+                            Jefe Abasto
+                        </option>
+                        <option value="Solicitante"
+                            {{ old('rol', $user->roles->pluck('name')->first() ?? '') == 'Solicitante' ? 'selected' : '' }}>
+                            Solicitante
+                        </option>
+                    </select>
+                </div>
+
 
                 <div>
                     <label for="plaza_id">Tipo de Plaza</label>

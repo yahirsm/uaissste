@@ -53,8 +53,9 @@
                                     <?php echo e(auth()->user()->name); ?>
 
                                 </p>
-                                <p class="text-xs font-medium text-gray-500 dark:text-gray-300">
-                                    <?php echo e(auth()->user()->email); ?>
+                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400">
+                                  Rol :  <?php echo e(auth()->user()->getRoleNames()->first() ?? 'Sin rol asignado'); ?>
+
 
                                 </p>
                             </div>

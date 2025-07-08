@@ -67,37 +67,39 @@ class ReporteController extends Controller
     /**
      * Genera el PDF de caducidad en un rango de fechas
      */
-    public function generarCaducidadPDF(Request $request)
-    {
-        $request->validate([
-            'from' => 'required|date',
-            'to'   => 'required|date|after_or_equal:from',
-        ]);
+   public function generarCaducidadPDF(Request $request)
+{
+    // 1) Validamos solo 'from' en formato Y-m
+    $request->validate([
+        'from' => 'required|date_format:Y-m',
+    ]);
 
-        $movimientos = Movimiento::with('material')
-            ->whereNotNull('fecha_caducidad')
-            ->whereBetween('fecha_caducidad', [$request->from, $request->to])
-            ->orderBy('fecha_caducidad')
-            ->get();
+    // 2) Creamos el rango: inicio y fin de mes
+    $from = Carbon::createFromFormat('Y-m', $request->from)->startOfMonth();
+    $to   = (clone $from)->endOfMonth();
 
-        $html = view('reportes.caducidad_pdf', [
-            'movimientos' => $movimientos,
-            'from'        => $request->from,
-            'to'          => $request->to,
-        ])->render();
+    // 3) Query como antes, pero con el rango mensual
+    $movimientos = Movimiento::with('material')
+        ->whereNotNull('fecha_caducidad')
+        ->whereBetween('fecha_caducidad', [$from, $to])
+        ->orderBy('fecha_caducidad')
+        ->get();
 
-        $mpdf = new Mpdf([
-            'tempDir' => storage_path('tmp'),
-        ]);
+    // 4) Renderizamos la vista (puede seguir siendo 'reportes.caducidad_pdf')
+    $html = view('reportes.caducidad_pdf', compact('movimientos','from','to'))->render();
 
-        $mpdf->WriteHTML($html);
+    $mpdf = new Mpdf(['tempDir' => storage_path('tmp')]);
+    $mpdf->WriteHTML($html);
 
-        return response(
-            $mpdf->Output('caducidad.pdf', 'D'),
-            200,
-            ['Content-Type' => 'application/pdf']
-        );
-    }
+    // Nombre dinámico: caducidad_2025-07.pdf
+    $filename = "caducidad_{$from->format('Y-m')}.pdf";
+
+    return response(
+        $mpdf->Output($filename, 'D'),
+        200,
+        ['Content-Type' => 'application/pdf']
+    );
+}
 
     /**
      * Genera el PDF de movimientos mensuales para un mes dado

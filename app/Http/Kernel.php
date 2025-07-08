@@ -4,17 +4,18 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+// IMPORTACIONES OBLIGATORIAS para Spatie
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+
 class Kernel extends HttpKernel
 {
     /**
-     * Las pilas de middleware globales de la aplicación.
-     *
-     * Estos middlewares se ejecutan para cada solicitud a su aplicación.
+     * Middleware globales de la aplicación.
      *
      * @var array
      */
     protected $middleware = [
-        // Lista de middlewares globales
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
@@ -23,7 +24,7 @@ class Kernel extends HttpKernel
     ];
 
     /**
-     * Los grupos de middleware de la aplicación.
+     * Middleware por grupos.
      *
      * @var array
      */
@@ -40,28 +41,30 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:api',
-            //Illuminate\Routing\Middleware\SubstituteBindings::class,
+            // \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
 
     /**
-     * El middleware de ruta de la aplicación.
-     *
-     * Estos middlewares pueden asignarse a grupos o usarse individualmente.
+     * Middleware asignable a rutas.
      *
      * @var array
      */
     protected $routeMiddleware = [
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'cache.headers'    => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can'              => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest'            => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
-        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'single.session' => \App\Http\Middleware\SingleSession::class,// <-- AÑADE ESTA LÍNEA
+        'signed'           => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle'         => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified'         => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-                
+        // Si tú usas tu SingleSession middleware:
+        'single.session'   => \App\Http\Middleware\SingleSession::class,
+
+        // ——— Spatie ———
+        'role'       => RoleMiddleware::class,
+        'permission' => PermissionMiddleware::class,
     ];
 }

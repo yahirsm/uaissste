@@ -33,19 +33,19 @@
             <?php endif; ?>
 
             <div class="overflow-x-auto">
-                <table class="w-full table-auto">
+                <table class="w-full table-auto border-collapse border border-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
-                            <th class="px-4 py-2">#</th>
-                            <th class="px-4 py-2">Fecha</th>
-                            <th class="px-4 py-2">Solicita</th>
-                            <th class="px-4 py-2">Área</th>
-                            <th class="px-4 py-2">Estado</th>
-                            <th class="px-4 py-2">Acciones</th>
+                            <th class="px-4 py-2 border">#</th>
+                            <th class="px-4 py-2 border">Fecha</th>
+                            <th class="px-4 py-2 border">Solicita</th>
+                            <th class="px-4 py-2 border">Área</th>
+                            <th class="px-4 py-2 border">Estado</th>
+                            <th class="px-4 py-2 border">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $__currentLoopData = $pedidos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php $__empty_1 = true; $__currentLoopData = $pedidos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $p): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <tr class="hover:bg-gray-50">
                                 <td class="border px-4 py-2"><?php echo e($p->id); ?></td>
                                 <td class="border px-4 py-2"><?php echo e($p->created_at->format('d/m/Y H:i')); ?></td>
@@ -70,16 +70,18 @@
                                     </a>
 
                                     
-                                    <?php if (! ($p->atendido)): ?>
-                                        <form action="<?php echo e(route('distribucion.pedidos.autorizar', $p)); ?>"
-                                              method="POST"
-                                              class="inline-block js-autorizar-form">
-                                            <?php echo csrf_field(); ?>
-                                            <button type="submit"
-                                                    class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded js-autorizar-btn">
-                                                <i class="fas fa-check mr-1"></i> Autorizar
-                                            </button>
-                                        </form>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('solicitudes.aprobar')): ?>
+                                        <?php if (! ($p->atendido)): ?>
+                                            <form action="<?php echo e(route('distribucion.pedidos.autorizar', $p)); ?>"
+                                                  method="POST"
+                                                  class="inline-block js-autorizar-form">
+                                                <?php echo csrf_field(); ?>
+                                                <button type="submit"
+                                                        class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded js-autorizar-btn">
+                                                    <i class="fas fa-check mr-1"></i> Autorizar
+                                                </button>
+                                            </form>
+                                        <?php endif; ?>
                                     <?php endif; ?>
 
                                     
@@ -89,7 +91,14 @@
                                     </a>
                                 </td>
                             </tr>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                            <tr>
+                                <td colspan="6" class="border px-4 py-6 text-center text-gray-700">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    No has realizado ningún pedido aún.
+                                </td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Solicitud;
-use Mpdf\Mpdf;
 use App\Models\Movimiento;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Mpdf\Mpdf;
+use Carbon\Carbon;
 
 class PedidoController extends Controller
 {
@@ -16,10 +16,20 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        // Traemos los pedidos, con usuario y servicio, ordenados y paginados:
-        $pedidos = Solicitud::with(['user', 'servicio'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(10); // 10 por página (ajústalo a tu gusto)
+        // PHPDoc para que el IDE entienda que Auth::user() es tu App\Models\User
+        /** @var \App\Models\User $authUser */
+        $authUser = Auth::user();
+
+        // Traigo siempre los pedidos con usuario y servicio, ordenados
+        $query = Solicitud::with(['user', 'servicio'])
+                         ->orderBy('created_at', 'desc');
+
+        // Si NO tiene rol Administrador ni Jefe Abasto, solo muestro los suyos
+        if (! $authUser->hasAnyRole(['Administrador', 'Jefe Abasto'])) {
+            $query->where('user_id', $authUser->id);
+        }
+
+        $pedidos = $query->paginate(10);
 
         return view('distribucion.pedidos.index', compact('pedidos'));
     }
@@ -34,18 +44,16 @@ class PedidoController extends Controller
         return view('distribucion.pedidos.show', compact('solicitud'));
     }
 
+    /**
+     * Generar PDF de un pedido
+     */
     public function pdf(Solicitud $solicitud)
     {
         $solicitud->load('materiales', 'user', 'servicio');
 
         $html = view('distribucion.pedidos.pdf', compact('solicitud'))->render();
 
-        // Solo indicamos tempDir para evitar permisos
-        $mpdf = new \Mpdf\Mpdf([
-            'tempDir' => storage_path('tmp'),
-        ]);
-
-        // Escribimos el HTML y forzamos descarga
+        $mpdf = new Mpdf(['tempDir' => storage_path('tmp')]);
         $mpdf->WriteHTML($html);
 
         return response(
@@ -54,26 +62,23 @@ class PedidoController extends Controller
             ['Content-Type' => 'application/pdf']
         );
     }
+
+    /**
+     * Autorizar pedido: genera movimientos y marca como atendido
+     */
     public function autorizar(Solicitud $solicitud)
     {
-        // Recorremos cada material de la solicitud
         foreach ($solicitud->materiales as $material) {
             Movimiento::create([
                 'material_id'      => $material->id,
                 'tipo'             => 'salida',
                 'cantidad'         => $material->pivot->cantidad,
-                // Unidad es obligatorio en tu tabla `movimientos`.
-                // Cámbialo por el que uses en tu inventario.
                 'unidad'           => 'UND',
                 'fecha_movimiento' => now(),
-                // Si tu pivot no tiene fecha de caducidad,
-                // podemos dejarla nula (la columna debe admitir NULL)
                 'fecha_caducidad'  => null,
             ]);
         }
 
-        // Marcamos la solicitud como atendida (suponiendo que
-        // en tu migración agregaste el campo 'atendido' booleano)
         $solicitud->update(['atendido' => true]);
 
         return redirect()

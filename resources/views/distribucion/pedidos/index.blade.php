@@ -24,19 +24,19 @@
             @endif
 
             <div class="overflow-x-auto">
-                <table class="w-full table-auto">
+                <table class="w-full table-auto border-collapse border border-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
-                            <th class="px-4 py-2">#</th>
-                            <th class="px-4 py-2">Fecha</th>
-                            <th class="px-4 py-2">Solicita</th>
-                            <th class="px-4 py-2">Área</th>
-                            <th class="px-4 py-2">Estado</th>
-                            <th class="px-4 py-2">Acciones</th>
+                            <th class="px-4 py-2 border">#</th>
+                            <th class="px-4 py-2 border">Fecha</th>
+                            <th class="px-4 py-2 border">Solicita</th>
+                            <th class="px-4 py-2 border">Área</th>
+                            <th class="px-4 py-2 border">Estado</th>
+                            <th class="px-4 py-2 border">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pedidos as $p)
+                        @forelse ($pedidos as $p)
                             <tr class="hover:bg-gray-50">
                                 <td class="border px-4 py-2">{{ $p->id }}</td>
                                 <td class="border px-4 py-2">{{ $p->created_at->format('d/m/Y H:i') }}</td>
@@ -60,18 +60,20 @@
                                         <i class="fas fa-eye mr-1"></i> Ver
                                     </a>
 
-                                    {{-- Autorizar (solo si está pendiente) --}}
-                                    @unless($p->atendido)
-                                        <form action="{{ route('distribucion.pedidos.autorizar', $p) }}"
-                                              method="POST"
-                                              class="inline-block js-autorizar-form">
-                                            @csrf
-                                            <button type="submit"
-                                                    class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded js-autorizar-btn">
-                                                <i class="fas fa-check mr-1"></i> Autorizar
-                                            </button>
-                                        </form>
-                                    @endunless
+                                    {{-- Autorizar (solo para quienes tengan permiso) --}}
+                                    @can('solicitudes.aprobar')
+                                        @unless($p->atendido)
+                                            <form action="{{ route('distribucion.pedidos.autorizar', $p) }}"
+                                                  method="POST"
+                                                  class="inline-block js-autorizar-form">
+                                                @csrf
+                                                <button type="submit"
+                                                        class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded js-autorizar-btn">
+                                                    <i class="fas fa-check mr-1"></i> Autorizar
+                                                </button>
+                                            </form>
+                                        @endunless
+                                    @endcan
 
                                     {{-- Descargar PDF --}}
                                     <a href="{{ route('distribucion.pedidos.pdf', $p) }}"
@@ -80,7 +82,14 @@
                                     </a>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6" class="border px-4 py-6 text-center text-gray-700">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    No has realizado ningún pedido aún.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

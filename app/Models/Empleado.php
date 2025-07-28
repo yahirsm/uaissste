@@ -4,10 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;     
-use App\Models\Servicio;  
-use App\Models\Plaza;     // ← Importa Plaza
+use App\Models\User;
+use App\Models\Servicio;
+use App\Models\Plaza;
 
+/**
+ * App\Models\Empleado
+ *
+ * @property int         $id
+ * @property string      $nombre
+ * @property string      $primer_apellido
+ * @property string|null $segundo_apellido
+ * @property string      $numero_empleado
+ * @property string      $rfc
+ * @property int         $servicio_actual_id
+ * @property int         $plaza_id
+ * @property int         $user_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ *
+ * @property-read User     $user
+ * @property-read Servicio $servicioActual
+ * @property-read Plaza    $plaza
+ */
 class Empleado extends Model
 {
     use HasFactory;
@@ -42,7 +61,7 @@ class Empleado extends Model
     }
 
     /**
-     * Relación con Plaza
+     * Relación con Plaza (clave foránea plaza_id)
      */
     public function plaza()
     {
@@ -50,20 +69,22 @@ class Empleado extends Model
     }
 
     /**
-     * Historial de servicios (many-to-many)
+     * Historial de servicios (muchos a muchos con pivot)
      */
     public function servicios()
     {
         return $this->belongsToMany(Servicio::class, 'empleado_servicio')
-                    ->withPivot('fecha_inicio', 'fecha_fin')
-                    ->withTimestamps();
+            ->withPivot('fecha_inicio', 'fecha_fin')
+            ->withTimestamps();
     }
-
     /**
-     * Sólo los servicios ya finalizados
+     * Solo los servicios ya finalizados (fecha_fin != null)
      */
     public function serviciosAnteriores()
     {
-        return $this->servicios()->whereNotNull('fecha_fin');
+        return $this->belongsToMany(Servicio::class, 'empleado_servicio')
+            ->withPivot('fecha_inicio', 'fecha_fin')
+            ->withTimestamps()
+            ->wherePivotNotNull('fecha_fin');
     }
 }

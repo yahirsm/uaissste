@@ -1,29 +1,5 @@
 <!DOCTYPE html>
 <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
-
-<!---
-<script>
-    let isClosing = false;
-    window.addEventListener('pagehide', (event) => {
-        const navigationType = performance.getEntriesByType('navigation')[0]?.type;
-        if (navigationType !== 'reload' && navigationType !== 'navigate' && !isClosing) {
-            isClosing = true;
-            const data = new FormData();
-            data.append('_token', '<?php echo e(csrf_token()); ?>');
-            navigator.sendBeacon('/logout', data);
-            setTimeout(() => {
-                isClosing = false;
-            }, 100);
-        }
-    });
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            isClosing = false;
-        }
-    });
-</script> -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,17 +14,32 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
+    <!-- Favicon -->
     <link rel="icon" href="<?php echo e(asset('favicon.ico')); ?>" type="image/png">
 
+    <!-- Choices.js CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+    />
 
-    <!-- Scripts -->
+    <!-- Your Tailwind/App CSS & JS via Vite -->
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
-    <!-- Styles -->
+    <!-- Livewire styles -->
     <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::styles(); ?>
 
-</head>
 
+    <style>
+      /* globally scale down if you like */
+      body { zoom: 0.8; }
+      /* limit dropdown height and enable scroll */
+      .choices__list--dropdown {
+        max-height: 300px !important;
+        overflow-y: auto !important;
+      }
+    </style>
+</head>
 <body class="font-sans antialiased">
     <?php if (isset($component)) { $__componentOriginalff9615640ecc9fe720b9f7641382872b = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalff9615640ecc9fe720b9f7641382872b = $attributes; } ?>
@@ -89,7 +80,7 @@ unset($__split);
 if (isset($__slots)) unset($__slots);
 ?>
 
-        <!-- Page Heading -->
+        <!-- Optional page header -->
         <?php if(isset($header)): ?>
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -99,18 +90,43 @@ if (isset($__slots)) unset($__slots);
             </header>
         <?php endif; ?>
 
-        <!-- Page Content -->
+        <!-- Main content slot -->
         <?php echo $__env->yieldContent('content'); ?>
-
         <?php echo e($slot ?? ''); ?>
 
     </div>
 
-    <?php echo $__env->yieldPushContent('modals'); ?>
-
+    <!-- Livewire scripts -->
     <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
 
-</body>
 
+    <!-- SweetAlert2 (already in your snippet) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Choices.js JS -->
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('select[data-trigger]').forEach((el) => {
+          new Choices(el, {
+            placeholder: true,
+            placeholderValue: 'Buscar o seleccionar...',
+            searchPlaceholderValue: 'Escribe para buscar...',
+            shouldSort: false,
+            itemSelectText: '',
+            position: 'bottom',
+            searchEnabled: true,
+            removeItemButton: false,
+            maxItemCount: 1,
+            renderChoiceLimit: 300,
+            classNames: {
+              containerOuter: 'choices bg-blue-50 rounded',
+            }
+          });
+        });
+      });
+    </script>
+</body>
 </html>
 <?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/layouts/app.blade.php ENDPATH**/ ?>

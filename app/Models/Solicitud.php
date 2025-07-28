@@ -45,7 +45,7 @@ class Solicitud extends Model
     public function materiales()
     {
         return $this->belongsToMany(Material::class, 'solicitud_material')
-                    ->withPivot('cantidad')
+                    ->withPivot(['cantidad','observaciones'])
                     ->withTimestamps();
     }
 

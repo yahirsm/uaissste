@@ -1,57 +1,68 @@
-<x-app-layout>
-    @include('layouts.partials.admin.navigation')
-    @include('layouts.partials.admin.sidebar')
+<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
+<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+    <?php echo $__env->make('layouts.partials.admin.navigation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php echo $__env->make('layouts.partials.admin.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <div class="sm:ml-64 p-4 pt-20">
         <div class="bg-white p-6 rounded-lg shadow">
-            {{-- Cabecera --}}
+            
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold text-red-700">
-                    <i class="fas fa-eye mr-2"></i> Detalle del Pedido #{{ $solicitud->id }}
+                    <i class="fas fa-eye mr-2"></i> Detalle del Pedido #<?php echo e($solicitud->id); ?>
+
                 </h2>
-                <a href="{{ route('distribucion.pedidos.index') }}"
+                <a href="<?php echo e(route('distribucion.pedidos.index')); ?>"
                     class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded flex items-center gap-2">
                     <i class="fas fa-arrow-left"></i> Volver
                 </a>
             </div>
 
-            {{-- Información principal --}}
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 <div>
-                    <p><strong>Fecha creación:</strong> {{ $solicitud->created_at->format('d/m/Y H:i') }}</p>
+                    <p><strong>Fecha creación:</strong> <?php echo e($solicitud->created_at->format('d/m/Y H:i')); ?></p>
                 </div>
                 <div>
-                    <p><strong>Solicita:</strong> {{ $solicitud->user->name }}</p>
+                    <p><strong>Solicita:</strong> <?php echo e($solicitud->user->name); ?></p>
                 </div>
                 <div>
-                    <p><strong>Área:</strong> {{ $solicitud->servicio->nombre }}</p>
+                    <p><strong>Área:</strong> <?php echo e($solicitud->servicio->nombre); ?></p>
                 </div>
                 <div class="md:col-span-3">
                     <p><strong>Estado:</strong>
-                        @if ($solicitud->atendido)
+                        <?php if($solicitud->atendido): ?>
                             <span
                                 class="inline-block px-2 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded">
                                 Atendido
                             </span>
-                        @else
+                        <?php else: ?>
                             <span
                                 class="inline-block px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded">
                                 Pendiente
                             </span>
-                        @endif
+                        <?php endif; ?>
                     </p>
 
-                    {{-- NUEVO: si ya fue atendido, mostramos fecha/hora de atención --}}
-                    @if ($solicitud->atendido)
+                    
+                    <?php if($solicitud->atendido): ?>
                         <p class="mt-1 text-gray-600">
                             <strong>Atendido el:</strong>
-                            {{ $solicitud->updated_at->format('d/m/Y H:i') }}
+                            <?php echo e($solicitud->updated_at->format('d/m/Y H:i')); ?>
+
                         </p>
-                    @endif
+                    <?php endif; ?>
                 </div>
             </div>
 
-            {{-- Tabla de materiales --}}
+            
             <div class="overflow-x-auto">
                 <table class="w-full table-auto border-collapse">
                     <thead>
@@ -63,34 +74,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($solicitud->materiales as $m)
+                        <?php $__currentLoopData = $solicitud->materiales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="p-2">{{ $m->clave }}</td>
-                                <td class="p-2">{{ $m->descripcion }}</td>
-                                <td class="p-2 text-center">{{ $m->pivot->cantidad }}</td>
+                                <td class="p-2"><?php echo e($m->clave); ?></td>
+                                <td class="p-2"><?php echo e($m->descripcion); ?></td>
+                                <td class="p-2 text-center"><?php echo e($m->pivot->cantidad); ?></td>
                                 <td class="p-2 whitespace-normal break-words">
-                                    {{ $m->pivot->observaciones ?: 'Sin observaciones' }}
+                                    <?php echo e($m->pivot->observaciones ?: 'Sin observaciones'); ?>
+
                                 </td>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
             </div>
 
-            {{-- Acciones --}}
+            
             <div class="mt-6 flex items-center space-x-4">
-                @can('solicitudes.aprobar')
-                    @unless ($solicitud->atendido)
-                        <form action="{{ route('distribucion.pedidos.autorizar', $solicitud) }}" method="POST" class="inline">
-                            @csrf
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('solicitudes.aprobar')): ?>
+                    <?php if (! ($solicitud->atendido)): ?>
+                        <form action="<?php echo e(route('distribucion.pedidos.autorizar', $solicitud)); ?>" method="POST" class="inline">
+                            <?php echo csrf_field(); ?>
                             <button type="submit"
                                 class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded flex items-center gap-2 js-autorizar-btn">
                                 <i class="fas fa-check"></i> Autorizar Pedido
                             </button>
                         </form>
-                    @endunless
-                @endcan
+                    <?php endif; ?>
+                <?php endif; ?>
 
-                <a href="{{ route('distribucion.pedidos.pdf', $solicitud) }}"
+                <a href="<?php echo e(route('distribucion.pedidos.pdf', $solicitud)); ?>"
                     class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded flex items-center gap-2">
                     <i class="fas fa-download"></i> Descargar PDF
                 </a>
@@ -98,7 +110,7 @@
         </div>
     </div>
 
-    @push('scripts')
+    <?php $__env->startPush('scripts'); ?>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -126,5 +138,15 @@
                 });
             });
         </script>
-    @endpush
-</x-app-layout>
+    <?php $__env->stopPush(); ?>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/distribucion/pedidos/show.blade.php ENDPATH**/ ?>

@@ -1,7 +1,7 @@
 <?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
 
 $__newAttributes = [];
-$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['value']));
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['for', 'value']));
 
 foreach ($attributes->all() as $__key => $__value) {
     if (in_array($__key, $__propNames)) {
@@ -16,7 +16,7 @@ $attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
 unset($__propNames);
 unset($__newAttributes);
 
-foreach (array_filter((['value']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+foreach (array_filter((['for', 'value']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
 
@@ -28,8 +28,12 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars); ?>
 
-<label <?php echo e($attributes->merge(['class' => 'block font-bold text-sm text-black'])); ?>>
+<label
+    for="<?php echo e($for); ?>"
+    <?php echo e($attributes->merge(['class' => 'block font-medium text-sm text-gray-700'])); ?>
+
+>
     <?php echo e($value ?? $slot); ?>
 
 </label>
-<?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/components/label.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\Lenovo\Documents\GitHub\ejercicio\resources\views/components/jet-label.blade.php ENDPATH**/ ?>

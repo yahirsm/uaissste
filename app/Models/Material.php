@@ -25,6 +25,7 @@ class Material extends Model
         'descripcion',
         'partida_id',
         'tipo_insumo_id',
+        'stock_actual',
     ];
 
     /**

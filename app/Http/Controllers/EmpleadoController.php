@@ -99,7 +99,8 @@ class EmpleadoController extends Controller
             }
 
             // 3) Email del usuario (puedes cambiarlo según tu lógica)
-            $email = "yahirsanchez952@gmail.com";
+            $email =  "sandra.martinezg@issste.gob.mx";
+           // "yahirsanchez952@gmail.com";
            //"{$username}@issste.mx";
             // 4) Generar contraseña en texto plano
             $i1 = strtolower(substr($nombre, 0, 1));

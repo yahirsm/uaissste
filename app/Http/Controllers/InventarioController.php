@@ -12,7 +12,6 @@ class InventarioController extends Controller
 {
   public function __construct()
     {
-        // Aquí sí protegemos cada método con su permiso exacto
         $this->middleware(PermissionMiddleware::class . ':inventario.ver')->only('index');
         $this->middleware(PermissionMiddleware::class . ':inventario.crear')->only(['create','store']);
         $this->middleware(PermissionMiddleware::class . ':inventario.editar')->only(['edit','update']);
@@ -67,22 +66,26 @@ class InventarioController extends Controller
         return view('inventario.edit', compact('material','partidas','tipos'));
     }
 
-    public function update(Request $request, Material $material)
-    {
-        $data = $request->validate([
-            'clave'          => ['required','string',"unique:materiales,clave,{$material->id},id",'regex:/^(?:\d{10}|MFCB\d{6})$/'],
-            'descripcion'    => 'required|string',
-            'partida_id'     => 'required|exists:partidas,id',
-            'tipo_insumo_id' => 'required|exists:tipos_insumo,tipo_insumo_id',
-        ],[
-            'clave.regex' => 'La clave debe ser 10 dígitos o “MFCB”+6 dígitos.',
-        ]);
+   public function update(Request $request, Material $material)
+{
+    $data = $request->validate([
+        'descripcion'    => 'required|string',
+        'partida_id'     => 'required|exists:partidas,id',
+        'tipo_insumo_id' => 'required|exists:tipos_insumo,tipo_insumo_id',
+    ], [
+        'descripcion.required'    => 'La descripción es obligatoria.',
+        'descripcion.string'      => 'La descripción debe ser texto válido.',
+        'partida_id.required'     => 'La partida es obligatoria.',
+        'partida_id.exists'       => 'La partida seleccionada no es válida.',
+        'tipo_insumo_id.required' => 'El tipo de insumo es obligatorio.',
+        'tipo_insumo_id.exists'   => 'El tipo de insumo seleccionado no es válido.',
+    ]);
 
-        $material->update($data);
+    $material->update($data);
 
-        return redirect()->route('inventario.index')
-                         ->with('success','Material actualizado correctamente.');
-    }
+    return redirect()->route('inventario.index')
+                     ->with('success','Material actualizado correctamente.');
+}
 
     public function destroy(Material $material)
     {

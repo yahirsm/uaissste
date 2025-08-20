@@ -60,7 +60,6 @@ class Kernel extends HttpKernel
         'throttle'         => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified'         => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        // Si tú usas tu SingleSession middleware:
         'single.session'   => \App\Http\Middleware\SingleSession::class,
 
         // ——— Spatie ———

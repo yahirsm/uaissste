@@ -10,17 +10,13 @@ use Mpdf\Mpdf;
 
 class ReporteController extends Controller
 {
-    /**
-     * Pantalla principal de reportes
-     */
+   
     public function index()
     {
         return view('reportes.index');
     }
 
-    /**
-     * Genera el PDF completo de inventario
-     */
+ 
     public function generarInventarioPDF()
     {
         $materiales = Material::with(['partida', 'tipoInsumo'])->get();
@@ -173,38 +169,38 @@ class ReporteController extends Controller
     /**
      * Genera el PDF con las entradas del día seleccionado.
      */
-    public function generarEntradasDiaPDF(Request $request)
-    {
-        // 1) Validamos el date input en formato YYYY-MM-DD
-        $request->validate([
-            'fecha' => 'required|date_format:Y-m-d',
-        ]);
+  public function generarEntradasDiaPDF(Request $request)
+{
+    $request->validate([
+        'fecha' => 'required|date_format:Y-m-d',
+    ], [
+        'fecha.required' => 'Selecciona una fecha para el reporte.',
+        'fecha.date_format' => 'El formato de la fecha debe ser YYYY-MM-DD.',
+    ]);
 
-        // 2) Creamos Carbon para ese día
-        $fecha = Carbon::createFromFormat('Y-m-d', $request->fecha);
-        $inicio = $fecha->startOfDay();
-        $fin    = $fecha->endOfDay();
+    $fecha = Carbon::createFromFormat('Y-m-d', $request->fecha);
+    $inicio = $fecha->copy()->startOfDay();
+    $fin = $fecha->copy()->endOfDay();
 
-        // 3) Traemos sólo movimientos tipo “entrada” en ese rango
-        $entradas = Movimiento::with('material')
-            ->where('tipo', 'entrada')
-            ->whereBetween('fecha_movimiento', [$inicio, $fin])
-            ->orderBy('fecha_movimiento')
-            ->get();
+    $entradas = Movimiento::with(['material', 'material.tipoInsumo'])
+        ->where('tipo', 'entrada')
+        ->whereBetween('fecha_movimiento', [$inicio, $fin])
+        ->orderBy('fecha_movimiento')
+        ->get();
 
-        // 4) Renderizamos la vista de PDF
-        $html = view('reportes.entradas_dia_pdf', compact('entradas','fecha'))->render();
+    $html = view('reportes.entradas_dia_pdf', compact('entradas', 'fecha'))->render();
 
-        $mpdf = new Mpdf(['tempDir' => storage_path('tmp')]);
-        $mpdf->WriteHTML($html);
+    $mpdf = new Mpdf(['tempDir' => storage_path('tmp')]);
+    $mpdf->WriteHTML($html);
 
-        $filename = "entradas_{$fecha->format('Y-m-d')}.pdf";
+    $filename = "entradas_{$fecha->format('Y-m-d')}.pdf";
 
-        return response(
-            $mpdf->Output($filename, 'D'),
-            200,
-            ['Content-Type' => 'application/pdf']
-        );
-    }
+    return response(
+        $mpdf->Output($filename, 'D'),
+        200,
+        ['Content-Type' => 'application/pdf']
+    );
+}
+
 
 }

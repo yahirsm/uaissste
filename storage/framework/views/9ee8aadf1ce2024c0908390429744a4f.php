@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Entradas del {{ $fecha->format('d/m/Y') }}</title>
+  <title>Entradas del <?php echo e($fecha->format('d/m/Y')); ?></title>
   <style>
     @page {
       margin: 160px 40px 100px 40px;
@@ -35,17 +35,17 @@
 </head>
 <body>
 
-@php
+<?php
   \Carbon\Carbon::setLocale('es');
   $fechaGen = now()->translatedFormat('l j \d\e F \d\e\l Y \a \l\a\s H:i') . ' hrs';
   $fechaFmt = $fecha->format('d/m/Y');
-@endphp
+?>
 
 <htmlpageheader name="header">
   <div style="text-align:center;">
-    <img src="{{ public_path('images/Logo.svg') }}" width="80" alt="Logo ISSSTE">
-    <h2 style="color:#800000; margin:5px 0;">ENTRADAS DEL {{ $fechaFmt }}</h2>
-    <p style="margin:2px 0;font-size:11px;">Generado el {{ $fechaGen }}</p>
+    <img src="<?php echo e(public_path('images/Logo.svg')); ?>" width="80" alt="Logo ISSSTE">
+    <h2 style="color:#800000; margin:5px 0;">ENTRADAS DEL <?php echo e($fechaFmt); ?></h2>
+    <p style="margin:2px 0;font-size:11px;">Generado el <?php echo e($fechaGen); ?></p>
     <hr style="border-color:#800000; margin-top:5px;">
   </div>
 </htmlpageheader>
@@ -72,22 +72,23 @@
     </tr>
   </thead>
   <tbody>
-    @forelse($entradas as $e)
+    <?php $__empty_1 = true; $__currentLoopData = $entradas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
       <tr>
-        <td style="text-align:center;">{{ $loop->iteration }}</td>
-        <td>{{ $e->material->clave }}</td>
-        <td>{{ $e->material->descripcion }}</td>
-        <td style="text-align:center;">{{ number_format($e->cantidad, 2) }}</td>
-        <td style="text-align:center;">{{ $e->fecha_movimiento->format('d/m/Y H:i') }}</td>
+        <td style="text-align:center;"><?php echo e($loop->iteration); ?></td>
+        <td><?php echo e($e->material->clave); ?></td>
+        <td><?php echo e($e->material->descripcion); ?></td>
+        <td style="text-align:center;"><?php echo e(number_format($e->cantidad, 2)); ?></td>
+        <td style="text-align:center;"><?php echo e($e->fecha_movimiento->format('d/m/Y H:i')); ?></td>
       </tr>
-    @empty
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
       <tr>
         <td colspan="5" style="text-align:center; padding:10px;">
           No se encontraron entradas para esta fecha.
         </td>
       </tr>
-    @endforelse
+    <?php endif; ?>
   </tbody>
 </table>
 </body>
 </html>
+<?php /**PATH C:\Users\Lenovo\Documents\GitHub\uaissste\resources\views/reportes/entradas_dia_pdf.blade.php ENDPATH**/ ?>

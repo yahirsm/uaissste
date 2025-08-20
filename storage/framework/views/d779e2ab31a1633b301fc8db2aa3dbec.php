@@ -1,7 +1,16 @@
-{{-- resources/views/distribucion/solicitud/index.blade.php --}}
-<x-app-layout>
-    @include('layouts.partials.admin.navigation')
-    @include('layouts.partials.admin.sidebar')
+
+<?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
+<?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('app-layout'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+    <?php echo $__env->make('layouts.partials.admin.navigation', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php echo $__env->make('layouts.partials.admin.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <div class="sm:ml-64 p-4 pt-20">
         <div class="bg-white p-6 rounded-lg shadow">
@@ -12,14 +21,15 @@
                 Aquí sólo podrás ver los materiales con los que se cuenta con existencia.
             </p>
 
-            @if (session('error'))
+            <?php if(session('error')): ?>
                 <div class="bg-red-500 text-white p-2 rounded mb-4">
-                    {{ session('error') }}
-                </div>
-            @endif
+                    <?php echo e(session('error')); ?>
 
-            <form id="solicitudForm" action="{{ route('distribucion.solicitud.store') }}" method="POST">
-                @csrf
+                </div>
+            <?php endif; ?>
+
+            <form id="solicitudForm" action="<?php echo e(route('distribucion.solicitud.store')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <table class="w-full table-auto mb-4">
                     <thead>
                         <tr class="bg-gray-100">
@@ -31,25 +41,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($materiales as $m)
+                        <?php $__currentLoopData = $materiales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $m): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td class="border px-4 py-2">{{ $m->clave }}</td>
-                                <td class="border px-4 py-2">{{ $m->descripcion }}</td>
-                                <td class="border px-4 py-2 text-center">{{ $m->stock_actual }}</td>
+                                <td class="border px-4 py-2"><?php echo e($m->clave); ?></td>
+                                <td class="border px-4 py-2"><?php echo e($m->descripcion); ?></td>
+                                <td class="border px-4 py-2 text-center"><?php echo e($m->stock_actual); ?></td>
                                 <td class="border px-4 py-2 text-center">
-                                    <input type="number" name="items[{{ $m->id }}][cantidad]" min="0"
-                                        max="{{ $m->stock_actual }}" value="{{ old("items.{$m->id}.cantidad", 0) }}"
+                                    <input type="number" name="items[<?php echo e($m->id); ?>][cantidad]" min="0"
+                                        max="<?php echo e($m->stock_actual); ?>" value="<?php echo e(old("items.{$m->id}.cantidad", 0)); ?>"
                                         class="w-20 p-1 border rounded text-center cantidad-input">
-                                    <input type="hidden" name="items[{{ $m->id }}][material_id]"
-                                        value="{{ $m->id }}">
+                                    <input type="hidden" name="items[<?php echo e($m->id); ?>][material_id]"
+                                        value="<?php echo e($m->id); ?>">
                                 </td>
                                 <td class="border px-4 py-2">
-                                    <input type="text" name="items[{{ $m->id }}][observaciones]"
-                                        value="{{ old("items.{$m->id}.observaciones") }}" placeholder="(opcional)"
+                                    <input type="text" name="items[<?php echo e($m->id); ?>][observaciones]"
+                                        value="<?php echo e(old("items.{$m->id}.observaciones")); ?>" placeholder="(opcional)"
                                         class="w-full p-1 border rounded">
                                 </td>
                             </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                 </table>
 
@@ -164,4 +174,14 @@
         });
     </script>
 
-</x-app-layout>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $attributes = $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
+<?php $component = $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54; ?>
+<?php unset($__componentOriginal9ac128a9029c0e4701924bd2d73d7f54); ?>
+<?php endif; ?>
+<?php /**PATH C:\Users\Lenovo\Documents\GitHub\uaissste\resources\views/distribucion/solicitud/index.blade.php ENDPATH**/ ?>

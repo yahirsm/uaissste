@@ -13,7 +13,6 @@ use App\Http\Controllers\InventarioMovimientoController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\PedidoController;
 
-// Importa los middlewares directamente
 use Spatie\Permission\Middleware\RoleMiddleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 
